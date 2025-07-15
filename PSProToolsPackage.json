@@ -1,0 +1,41 @@
+{
+  "Package": {
+    "DotNetSdk": "",
+    "DotNetVersion": "net4.8.0",
+    "Copyright": "(c) 2025",
+    "Enabled": true,
+    "FileVersion": "0.1.0",
+    "RequireElevation": false,
+    "HighDPISupport": true,
+    "ServiceName": "MyService",
+    "HideConsoleWindow": true,
+    "Obfuscate": true,
+    "OutputName": "My Script",
+    "PowerShellVersion": "Windows PowerShell",
+    "Lightweight": false,
+    "Resources": [
+      "Resources.resx",
+      "Icon.ico"
+    ],
+    "ApplicationIconPath": "Resources\\Icon.ico",
+    "PackageType": "Windows",
+    "PowerShellArguments": "-NoProfile -ExecutionPolicy Bypass",
+    "ProductVersion": "0.1.0",
+    "FileDescription": "My Script",
+    "Host": "IronmanPowerShellWinFormsHost",
+    "ServiceDisplayName": "My Service",
+    "DisableQuickEdit": false,
+    "Certificate": "",
+    "RuntimeIdentifier": "win-x64",
+    "ProductName": "My Script",
+    "Platform": "x64"
+  },
+  "Bundle": {
+    "Modules": false,
+    "IgnoredModules": [],
+    "Enabled": true,
+    "NestedModules": false
+  },
+  "OutputPath": "bin\\debug",
+  "Root": "Script.ps1"
+}

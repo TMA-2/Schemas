@@ -1,0 +1,234 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Schema for PowerShell Pro Tools Packager.json",
+  "$comment": "This schema defines the structure for a JSON-format PowerShell Pro Tools packager configuration. It includes properties for the root script, output path, packaging options, and bundling settings. See https://docs.poshtools.com/powershell-pro-tools-documentation/packaging/package.psd1#config-file-schema for more details on the original psd1 format.",
+  "title": "PowerShell Pro Tools Packager",
+  "type": "object",
+  "properties": {
+    "Root": {
+      "type": "string",
+      "description": "Root script to package. This is the main entry point for the package."
+    },
+    "OutputPath": {
+      "type": "string",
+      "description": "The output directory for the resulting executable."
+    },
+    "Package": {
+      "type": "object",
+      "description": "Configuration for the packager.",
+      "properties": {
+        "Enabled": {
+          "type": "boolean",
+          "description": "Whether the packager is enabled."
+        },
+        "Obfuscate": {
+          "type": "boolean",
+          "description": "Whether to obfuscate the assembly. Only valid when PowerShellVersion = Windows PowerShell.",
+          "if": {
+            "properties": {
+              "PowerShellVersion": {
+                "const": "Windows PowerShell"
+              }
+            }
+          },
+          "then": {
+            "type": "boolean"
+          },
+          "else": {
+            "not": {}
+          }
+        },
+        "HideConsoleWindow": {
+          "type": "boolean",
+          "description": "Whether to hide the console window. Only valid for console applications. Useful for packaging form applications."
+        },
+        "FileDescription": {
+          "type": "string",
+          "description": "The file description to display in the assembly properties."
+        },
+        "FileVersion": {
+          "type": "string",
+          "description": "The file version to display in the assembly properties."
+        },
+        "ProductName": {
+          "type": "string",
+          "description": "The product name to display in the assembly properties."
+        },
+        "ProductVersion": {
+          "type": "string",
+          "description": "The product version to display in the assembly properties."
+        },
+        "Copyright": {
+          "type": "string",
+          "description": "The copyright to display in the assembly properties."
+        },
+        "RequireElevation": {
+          "type": "boolean",
+          "description": "Whether the executable requires elevation to run. This setting is only supported on Windows.",
+          "if": {
+            "properties": {
+              "RuntimeIdentifier": {
+                "pattern": "^win"
+              }
+            }
+          },
+          "then": {
+            "type": "boolean"
+          },
+          "else": {
+            "not": {}
+          }
+        },
+        "ApplicationIconPath": {
+          "type": "string",
+          "description": "The path to the icon to display for this application."
+        },
+        "PackageType": {
+          "type": "string",
+          "enum": ["Console", "Service", "Windows"],
+          "description": "Type of package to create. Accepted values are Console, Service, or Windows."
+        },
+        "DisableQuickEdit": {
+          "type": "boolean",
+          "description": "Disables the quick edit mode on Windows console applications.",
+          "if": {
+            "properties": {
+              "PackageType": {
+                "const": "Console"
+              }
+            }
+          },
+          "then": {
+            "type": "boolean"
+          },
+          "else": {
+            "not": {}
+          }
+        },
+        "ServiceName": {
+          "type": "string",
+          "description": "The name of the service when packaging a service.",
+          "if": {
+            "properties": {
+              "PackageType": {
+                "const": "Service"
+              }
+            }
+          },
+          "then": {
+            "type": "string"
+          },
+          "else": {
+            "not": {}
+          }
+        },
+        "ServiceDisplayName": {
+          "type": "string",
+          "description": "The display name of the service when packaging a service.",
+          "if": {
+            "properties": {
+              "PackageType": {
+                "const": "Service"
+              }
+            }
+          },
+          "then": {
+            "type": "string"
+          },
+          "else": {
+            "not": {}
+          }
+        },
+        "PowerShellVersion": {
+          "type": "string",
+          "description": "The PowerShell version to target. Ensure that you specify a supported DotNetVersion when selecting your PowerShell version.",
+          "enum": ["Windows PowerShell", "7.0.x", "7.1.x", "7.2.x", "7.3.x", "7.4.x", "7.5.x"],
+          "if": {
+            "properties": {
+              "DotNetVersion": {
+                "const": "net480"
+              }
+            }
+          },
+          "then": {
+            "enum": ["Windows PowerShell"]
+          },
+          "else": {
+            "not": {}
+          }
+        },
+        "DotNetVersion": {
+          "type": "string",
+          "description": "The .NET version to target for the executable. This must be compatible with PowerShellVersion.",
+          "enum": ["net462", "net470", "net471", "net472", "net480", "net481", "netcoreapp31", "net50", "net60", "net70", "net80", "net81", "net90"],
+          "if": {
+            "properties": {
+              "PowerShellVersion": {
+                "const": "Windows PowerShell"
+              }
+            }
+          },
+          "then": {
+            "enum": ["net462", "net470", "net471", "net472", "net480", "net481"]
+          },
+          "else": {
+            "not": {}
+          }
+        },
+        "HighDPISupport": {
+          "type": "boolean",
+          "description": "Enable high DPI support for Windows Forms applications."
+        },
+        "PowerShellArguments": {
+          "type": "string",
+          "pattern": "(?!-Command)",
+          "description": "Additional arguments to provide to the PowerShell process. This can include arguments like -ExecutionPolicy or -NoProfile. It must not include -Command."
+        }
+      }
+    },
+    "Bundle": {
+      "type": "object",
+      "description": "Configuration for bundling scripts and modules into the executable.",
+      "properties": {
+        "Enabled": {
+          "type": "boolean",
+          "description": "Bundling will include referenced scripts and modules in the resulting executable."
+        },
+        "Modules": {
+          "type": "boolean",
+          "description": "Whether to bundle modules with the script executable. Modules will only be bundled when imported with Import-Module.",
+          "if": {
+            "properties": {
+              "Enabled": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "type": "boolean"
+          },
+          "else": {
+            "not": {}
+          }
+        },
+        "NestedModules": {
+          "type": "boolean",
+          "description": "Whether to include nested modules of packaged modules. Requires Modules = true.",
+          "if": {
+            "properties": {
+              "Modules": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "type": "boolean"
+          },
+          "else": {
+            "not": {}
+          }
+        }
+      }
+    }
+  }
+}

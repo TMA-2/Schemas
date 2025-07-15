@@ -1,0 +1,1787 @@
+{
+  // "$schema": "https://json-schema.org/draft/2020-12/schema",
+  // VSCode-specific schema info
+  // https://code.visualstudio.com/docs/languages/json#_json-schemas-and-settings
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "TaniumSoftwarePackage",
+  "type": "object",
+  "title": "Tanium Software Package",
+  "description": "A software package description which can be imported to Tanium.",
+  "required": [
+    "allFilesCachedOnTaniumServer",
+    "applicabilityCountSoftwarePackageId",
+    "architecture",
+    "contentSetId",
+    "contentSetName",
+    "createdAt",
+    "createdAtDateTime",
+    "createdByTaniumUserId",
+    "createdByTaniumUsername",
+    "currentSoftwarePackageEditId",
+    "customMetadata",
+    "deployOperations",
+    "description",
+    "diskSpaceRequired",
+    "eussDisplayName",
+    "fileCachePercentComplete",
+    "files",
+    "hasBeenDistributed",
+    "icon",
+    "id",
+    "initializedAt",
+    "initializedAtDateTime",
+    "inProgress",
+    "installed",
+    "installEligible",
+    "installVerification",
+    "inUse",
+    "inUseAsLatestAutoImported",
+    "inUseInBundleAsLatestApplicable",
+    "inUseStatus",
+    "inUseText",
+    "isAutoImport",
+    "isInUse",
+    "isTaniumManaged",
+    "minimumRam",
+    "Not Applicable",
+    "platform",
+    "productName",
+    "productVendor",
+    "productVersion",
+    "requiredSoftware",
+    "requireEussApproval",
+    "schemaVersion",
+    "source",
+    "status",
+    "supportLink",
+    "systemRequirements",
+    "totalPackageSize",
+    "Update Ineligible",
+    "updatedAt",
+    "updatedAtDate",
+    "updatedAtDateObject",
+    "updatedAtDateTime",
+    "updatedByTaniumUserId",
+    "updatedByTaniumUsername",
+    "updateDetection",
+    "updateEligible",
+    "userActions"
+  ],
+  "properties": {
+    //#region Simple Properties
+    "id": {
+      "description": "The unique ID of the package",
+      "type": "integer"
+    },
+    "currentSoftwarePackageEditId": {
+      "description": "Essentially, the revision # of the package.",
+      "type": "integer"
+    },
+    "schemaVersion": {
+      "description": "Presumably, the schema version used to create the package JSON. But who knows where to find that...",
+      "type": "integer",
+      "default": 1
+    },
+    "contentSetId": {
+      "description": "Unsure",
+      "type": "integer"
+    },
+    "productName": {
+      "description": "The name of the application.",
+      "type": "string"
+    },
+    "productVendor": {
+      "description": "The application vendor's name.",
+      "type": "string"
+    },
+    "productVersion": {
+      "description": "The application version.",
+      "pattern": "^\\d+(\\.\\d+)*$",
+      "type": "string"
+    },
+    "supportLink": {
+      "description": "A URL that the user can click on in the package properties for information related to the software.",
+      "pattern": "^https?://",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "eussDisplayName": {
+      "description": "An alternate name to show in the Self Service Portal instead of the default 'ProductVendor ProductName ProductVersion'. If not used, an empty string.",
+      "type": "string"
+    },
+    "articleId": {
+      "description": "The ID of the article in the Tanium Knowledge Base.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "articleUrl": {
+      "description": "The URL of the article in the Tanium Knowledge Base.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "description": {
+      "description": "The description text for the software package.",
+      "type": "string"
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "windows",
+        "mac",
+        "linux"
+      ]
+    },
+    "architecture": {
+      "description": "A string representation of /systemRequirements/allowedArchitectures joined with a comma.",
+      "pattern": "(x64|x86)(, \\g<1>)?",
+      "type": "string"
+    },
+    "createdAtDateTime": {
+      "description": "The date and time when the package was created, in 'MM/DD/YYYY, HH:MM AM/PM' format.",
+      "pattern": "^\\d{1,2}/\\d{1,2}/\\d{4}, \\d{1,2}:\\d{2} [AP]M$",
+      "type": "string"
+    },
+    "diskSpaceRequired": {
+      "description": "The disk space required for the application, in 'XXX.YY GB/MB/KB/B' format.",
+      "pattern": "^\\d+\\.\\d{2} [GMK]?B$",
+      "type": "string"
+    },
+    "minimumRam": {
+      "description": "The minimum amount of RAM required for the application to install.",
+      "pattern": "^\\d+\\.\\d{2} [GMK]?B$",
+      "type": "string"
+    },
+    "commonVulnerabilitiesAndExposures": {
+      "type": "null"
+    },
+    "customMetadata": {
+      "type": "string"
+    },
+    "requireEussApproval": {
+      "type": "boolean"
+    },
+    "inUseStatus": {
+      "type": "integer"
+    },
+    "isTaniumManaged": {
+      "type": "boolean"
+    },
+    "updatedAt": {
+      "description": "The date and time when the package was last updated, in 'yyyy-MM-ddThh:mm:ss.fffZ' format.",
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{1,5}Z$"
+    },
+    "updatedByTaniumUserId": {
+      "description": "The Tanium user ID of the user who last updated the package.",
+      "type": "integer"
+    },
+    "updatedByTaniumUsername": {
+      "description": "The username of the user who last updated the package.",
+      "type": "string",
+      "pattern": "^(Deploy|[a-zA-Z0-9._-]+@[\\w.-]+)$"
+    },
+    "applicabilityCounts": {
+      "type": "null"
+    },
+    "createdAt": {
+      "description": "The date and time when the package was created, in 'yyyy-MM-ddThh:mm:ss.fffZ' format.",
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{1,5}Z$"
+    },
+    "createdByTaniumUserId": {
+      "description": "The Tanium user ID of the user who created the package.",
+      "type": "integer"
+    },
+    "createdByTaniumUsername": {
+      "description": "The username of the user who created the package.",
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9._-]+@[\\w.-]+$"
+    },
+    "isAutoImport": {
+      "type": "boolean"
+    },
+    "versionCountToKeep": {
+      "description": "The number of previous versions to keep for this package before rolling over.",
+      "items": [
+        { "type": "number" },
+        { "type": "null" }
+      ]
+    },
+    "initializedAt": {
+      "description": "The date and time when the package was initialized, in 'yyyy-MM-ddThh:mm:ss.fffZ' format. Null otherwise.",
+      "items": [
+        { "type": "string" },
+        { "type": "null" }
+      ]
+    },
+    "applicabilityCountSoftwarePackageId": {
+      "type": "integer"
+    },
+    "contentSetName": {
+      "type": "string"
+    },
+    "totalPackageSize": {
+      "type": "string"
+    },
+    "updatedAtDate": {
+      "type": "string"
+    },
+    "updatedAtDateObject": {
+      "type": "string"
+    },
+    "updatedAtDateTime": {
+      "type": "string"
+    },
+    "importedAtDate": {
+      "type": "null"
+    },
+    "importedAtDateObject": {
+      "type": "null"
+    },
+    "importedAtDateTime": {
+      "type": "null"
+    },
+    "installEligible": {
+      "type": "integer"
+    },
+    "updateEligible": {
+      "type": "integer"
+    },
+    "installed": {
+      "type": "integer"
+    },
+    "Installed": {
+      "type": "integer"
+    },
+    "Install Eligible": {
+      "type": "integer"
+    },
+    "Update Eligible": {
+      "type": "integer"
+    },
+    "Update Ineligible": {
+      "type": "integer"
+    },
+    "Not Applicable": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "string"
+    },
+    "isInUse": {
+      "$comment": "Also see: /inUseStatus = 1",
+      "type": "boolean"
+    },
+    "inUseInBundleAsLatestApplicable": {
+      "type": "boolean"
+    },
+    "inUseAsLatestAutoImported": {
+      "type": "boolean"
+    },
+    "inUseText": {
+      "type": "string"
+    },
+    "initializedAtDateTime": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "allFilesCachedOnTaniumServer": {
+      "type": "boolean"
+    },
+    "fileCachePercentComplete": {
+      "type": "integer"
+    },
+    "galleryImportedFromPackageId": {
+      "description": "The ID of the imported gallery package.",
+      "items": [
+        { "type": "integer" },
+        { "type": "null" }
+      ]
+    },
+    "galleryImportedAt": {
+      "description": "For packages imported from the Tanium Gallery, this is the date and time when the package was imported.",
+      "items": [
+        {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{1,5}Z$"
+        },
+        { "type": "null" }
+      ]
+    },
+    "inProgress": {
+      "type": "boolean"
+    },
+    "hasBeenDistributed": {
+      "type": "boolean"
+    },
+    //#endregion Simple Properties
+    //#region Complex Properties
+    "systemRequirements": {
+      "description": "The system requirements that must be met for any deployment action to be applicable.",
+      "type": "object",
+      "items": {
+        "type": "object",
+        "anyOf": [
+          { "const": "allowedArchitectures" },
+          { "const": "minSpaceRequiredInKB" },
+          { "const": "minMemoryRequiredInKB" },
+          { "const": "operatingSystems" }
+        ]
+      },
+      "required": [
+        "allowedArchitectures",
+        "operatingSystems"
+      ],
+      "properties": {
+        "allowedArchitectures": {
+          "$comment": "This is written to /architecture as the values joined by ',', e.g. x86, x64.",
+          "description": "The OS architectures this is intended for. Should be x64 in most cases, or empty to have no requirement.",
+          "type": "array",
+          "default": ["x64"],
+          "items": {
+            "type": "string",
+            "anyOf": [
+              { "const": "x64" },
+              { "const": "x86" }
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "minSpaceRequiredInKB": {
+          "$comment": "This is written to /diskSpaceRequired as a string in 'XXX.YY MB' format, e.g. '273.02 MB'. \totalPackageSize could be used, as could adding up /files/size.",
+          "description": "The minimum hard drive space required for installation, in kilobytes (closest whole number).\n\nThis should be the total size of the installation files (see: totalPackageSize) x 3.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "minMemoryRequiredInKB": {
+          "$comment": "This is written to minimumRam as a string in X.YY GB format, e.g. '1.00 GB'.",
+          "description": "The minimum RAM required by the application, in kilobytes.",
+          "default": 0.00,
+          "type": "integer"
+        },
+        "operatingSystems": {
+          "description": "The operating systems on which this runs. May be empty.",
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "The name of the operating system, e.g. 'Windows 10 & 11 - All Versions'.",
+                "type": "string",
+                "default": "Windows 10 & 11 - All Versions"
+              },
+              "version": {
+                "description": "The version of the operating system, e.g. '10.0'.",
+                "type": "string",
+                "pattern": "^\\d+(\\.\\d+)*$",
+                "default": "10.0"
+              },
+              "type": {
+                "description": "The type of operating system, e.g. 'Workstation', 'Server.",
+                "type": "string",
+                "enum": [
+                  "Workstation",
+                  "Server"
+                ]
+              },
+              "platform": {
+                "description": "The platform of the operating system, e.g. 'windows', 'mac', 'linux'.",
+                "type": "string",
+                "enum": [
+                  "windows",
+                  "mac",
+                  "linux"
+                ]
+              },
+              "distribution": {
+                "$comment": "UNKNOWN",
+                "type": [
+                  "null",
+                  "string"
+                ]
+              }
+            }
+          },
+          "examples": [
+            [
+              {
+                "name": "Windows 10 & 11 - All Versions",
+                "version": "10.0",
+                "type": "Workstation",
+                "platform": "windows",
+                "distribution": null
+              }
+            ],
+            [
+              {
+                "name": "Ubuntu Server",
+                "version": "20.04",
+                "type": "Server",
+                "platform": "linux",
+                "distribution": null
+              }
+            ]
+          ]
+        }
+      }
+    },
+    // requiredSoftware, updateDetection, and installVerification use the same keys, with at least one subGroups
+    "requiredSoftware": {
+      "$comment": "The required rules for this package to be installed. This doubles as the Install action detection.",
+      "description": "The required rules for this package to be installed. This doubles as the Install action detection.",
+      "oneOf": [
+        {
+          "type": "object",
+          "maxProperties": 0,
+          "description": "An empty object is allowed if no required installation rules are specified."
+        },
+        {
+          "$ref": "#/definitions/verification"
+        }
+      ]
+    },
+    "updateDetection": {
+      "$comment": "The rules to determine if a different version of the package is already installed, and can be updated. This is used for the Update action detection.",
+      "description": "The rules to determine if a different version of the package is already installed, and can be updated.",
+      "oneOf": [
+        {
+          "type": "object",
+          "maxProperties": 0,
+          "description": "An empty object is allowed if no update rules are specified."
+        },
+        {
+          "$ref": "#/definitions/verification"
+        }
+      ]
+    },
+    "installVerification": {
+      "$comment": "The rules to determine if the package is installed. Contrast with requiredSoftware, which determines if the package may be installed.",
+      "description": "The rules to determine if the package is installed.",
+      "$ref": "#/definitions/verification"
+    },
+    "deployOperations": {
+      "$ref": "#/definitions/deployments",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "requireFiles": {
+            "type": "boolean"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/deploymentStepCommon",
+              "properties": {
+                "commandName": {
+                  "type": "string"
+                },
+                "commandLine": {
+                  "type": "string"
+                },
+                "commandUser": {
+                  "type": "string"
+                },
+                "commandTimeoutInMinutes": {
+                  "type": "integer"
+                },
+                "successCodes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "processName": {
+                  "type": "string"
+                },
+                "processAction": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "onFail",
+                "type"
+              ],
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/deploymentStepCommand"
+                },
+                {
+                  "$ref": "#/definitions/deploymentStepProcess"
+                },
+                {
+                  "$ref": "#/definitions/deploymentStepFilesystem"
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "name",
+          "requireFiles",
+          "steps",
+          "type"
+        ]
+      }
+    },
+    "files": {
+      "type": "array",
+      "$ref": "#/definitions/files",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/filesremote"
+          },
+          {
+            "$ref": "#/definitions/fileslocal"
+          }
+        ],
+        "type": "object",
+        "required": [
+          "type", // local-file or remote-file
+          "name", // filename
+          "sha256", // hash
+          "size" // int. size in bytes
+          // local-file
+            // "id" // guid w/o brackets. only used sometimes?
+            // "fileCachedOnTaniumServer" // bool
+            // "fileCachePercentComplete" // int. 1 - 100
+          // remote-file
+            // "location" // URI file location
+            // "isDownloadedDirectlyByTaniumServer" // bool
+            // "uncompressedSize" // only sometimes used, based on ???
+        ],
+        "properties": {
+          // global properties
+          "type": {
+            "description": "Whether the file is locally uploaded or stored on a remote URI.",
+            "type": "string",
+            "enum": [
+              "local-file",
+              "remote-file"
+            ]
+          }
+        }
+      }
+    },
+    "icon": {
+      "$comment": "The icon associated with the software package, stored in Base64 format.",
+      "description": "The icon associated with the software package. Displayed in the Self Service Portal.",
+      "default": null,
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "dataUrl",
+            "filename",
+            "id",
+            "sha256Hash"
+          ],
+          "properties": {
+            "id": {
+              "description": "The unique ID of the icon.",
+              "type": "integer"
+            },
+            "dataUrl": {
+              "description": "The base64 content of the icon image, in data URL format.",
+              "type": "string",
+              "pattern": "^data:image/(png|jpeg|gif|bmp);base64,[A-Za-z0-9+/=]+$"
+            },
+            "filename": {
+              "description": "The name of the uploaded icon file, including extension.",
+              "type": "string"
+            },
+            "sha256Hash": {
+              "description": "The SHA-256 hash of the icon file, used for integrity verification.",
+              "type": "string",
+              "pattern": "^[A-Fa-f0-9]{64}$"
+            }
+          }
+        }
+      ]
+    },
+    "inUse": {
+      "description": "",
+      "type": "object",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "required": [
+            "bundles",
+            "deployments",
+            "profiles",
+            "siblings"
+          ],
+          "properties": {
+            "bundles": {
+              "type": "array"
+            },
+            "deployments": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "editId": {
+                    "type": "integer"
+                  },
+                  "softwarePackageId": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "createdByTaniumUsername": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  }
+                },
+                "enum": [
+                  "createdAt",
+                  "createdByTaniumUsername",
+                  "editId",
+                  "id",
+                  "name",
+                  "softwarePackageId"
+                ]
+              }
+            },
+            "profiles": {
+              "description": "A list of associated Self Service Profiles.",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "The ID associating the package and profile.",
+                    "type": "integer"
+                  },
+                  "profileId": {
+                    "description": "The Self Service Profile ID, as used when viewing or editing:\nhttps://thr.cloud.tanium.com/ui/deploy/profile/view/100",
+                    "type": "integer"
+                  },
+                  "editId": {
+                    "description": "Unknown",
+                    "type": "integer"
+                  },
+                  "name": {
+                    "description": "The profile name, e.g. THR - WRK - c.TheBestApp.deploy",
+                    "type": "string"
+                  },
+                  "createdByTaniumUsername": {
+                    "description": "The user who created the profile association.",
+                    "type": "string",
+                    "pattern": "^(Deploy|[a-zA-Z0-9._-]+@[\\w.-]+)$"
+                  },
+                  "createdAt": {
+                    "description": "When the profile association was created.",
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{1,5}Z$"
+                  }
+                },
+                "required": [
+                  "createdAt",
+                  "createdByTaniumUsername",
+                  "editId",
+                  "id",
+                  "name",
+                  "profileId"
+                ]
+              }
+            },
+            "siblings": {
+              "type": "array"
+            }
+          }
+        }
+      ]
+    },
+    "userActions": {
+      "type": "object",
+      "required": [
+        "canCopy",
+        "canDelete",
+        "canDeploy",
+        "canEdit"
+      ],
+      "properties": {
+        "canDelete": {
+          "type": "object",
+          "required": [
+            "hasRBAC"
+          ],
+          "properties": {
+            "hasRBAC": {
+              "type": "boolean"
+            }
+          }
+        },
+        "canEdit": {
+          "type": "object",
+          "required": [
+            "hasMR",
+            "hasRBAC"
+          ],
+          "properties": {
+            "hasRBAC": {
+              "type": "boolean"
+            },
+            "hasMR": {
+              "type": "boolean"
+            }
+          }
+        },
+        "canDeploy": {
+          "type": "object",
+          "required": [
+            "hasRBAC"
+          ],
+          "properties": {
+            "hasRBAC": {
+              "type": "boolean"
+            }
+          }
+        },
+        "canCopy": {
+          "type": "object",
+          "required": [
+            "hasRBAC"
+          ],
+          "properties": {
+            "hasRBAC": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  },
+  //#endregion Complex Properties
+  //#region Defs
+  "definitions": {
+    "deploymentStepFilesystem": {
+      "$id": "/schemas/deploymentStepFilesystem",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$comment": "A deployment step that performs operations on files and directories.",
+      "description": "A deployment step that performs operations on files and directories.",
+      "type": "object",
+      "$ref": "#/definitions/deploymentStepCommon",
+      "properties": {
+        "action": {
+          "$comment": "The action to take on the filesystem, i.e. createFolder, extractFileFolder, deleteFileFolder, copyFileFolder, renameFileFolder etc.",
+          "description": "The action to take on the filesystem, i.e. createFolder, extractFileFolder, deleteFileFolder, copyFileFolder, renameFileFolder etc.",
+          "type": "string",
+          "default": "copyFileFolder",
+          "enum": [
+            "createFolder", // destination
+            "copyFileFolder", // source, destination, overwrite
+            "deleteFileFolder", // source
+            "renameFileFolder", // source, updatedName
+            "extractFileFolder" // source, destination, fileType, extractTo, overwrite, extractTimeoutInMinutes
+          ]
+        },
+        "fileType": {
+          "$comment": "The type of file to extract.",
+          "description": "The type of file to extract.",
+          "type": "object",
+          "properties": {
+            "structure": {
+              "$comment": "The structure of the file.",
+              "description": "The structure of the file.",
+              "type": "string",
+              "default": "detect",
+              "enum": [
+                "compressed",
+                "detect",
+                "7z",
+                "tar",
+                "zip"
+              ]
+            },
+            "compression": {
+              "$comment": "The specific compression type of the file.",
+              "description": "The specific compression type of the file.",
+              "type": "string",
+              "default": "none",
+              "enum": [
+                "7z",
+                "bzip2",
+                "gzip",
+                "xz",
+                "Z",
+                "none"
+              ]
+            }
+          }
+        },
+        "extractTo": {
+          "$comment": "Where to extract the file, i.e. the current path or to another folder.",
+          "description": "Where to extract the file, i.e. the current path or to another folder.",
+          "type": "string",
+          "default": "root",
+          "enum": [
+            "root", // Extracts to the same directory as the source
+            "within" // Extracts to destination using the filename as the extraction folder.
+          ]
+        },
+        "extractTimeoutInMinutes": {
+          "$comment": "The timeout for the extraction in minutes before terminating the process.",
+          "description": "The timeout for the extraction in minutes before terminating the process.",
+          "type": "integer",
+          "default": 1
+        },
+        "source": {
+          "$comment": "The source path for copy or move actions.",
+          "description": "The source path for copy or move actions.",
+          "type": "string"
+        },
+        "destination": {
+          "$comment": "The destination path for copy or move actions.",
+          "description": "The destination path for copy or move actions.",
+          "type": "string"
+        },
+        "updatedName": {
+          "$comment": "The new name for the file or folder in rename actions.",
+          "description": "The new name for the file or folder in rename actions.",
+          "type": "string"
+        },
+        "overwrite": {
+          "$comment": "Whether to overwrite existing files or folders in copy or extract actions.",
+          "description": "Whether to overwrite existing files or folders in copy or extract actions.",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "deploymentStepProcess": {
+      "$id": "/schemas/deploymentStepProcess",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$comment": "A deployment step that checks for a process.",
+      "type": "object",
+      "$ref": "#/definitions/deploymentStepCommon",
+      "properties": {
+        "processName":{
+          "$comment": "The name of the process to check for, e.g. 'notepad.exe'.",
+          "description": "The name of the process to check for, e.g. 'notepad.exe'.",
+          "type": "string"
+        },
+        "processAction": {
+          "$comment": "The action to take if the process is found, i.e. 'kill' or 'wait'.",
+          "description": "The action to take if the process is found, i.e. 'kill' or 'wait'.",
+          "type": "string",
+          "default": "wait",
+          "enum": [
+            "kill",
+            "wait"
+          ]
+        }
+      }
+    },
+    "deploymentStepCommand": {
+      "$id": "/schemas/deploymentStepCommand",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$comment": "A deployment step that runs a command.",
+      "type": "object",
+      "$ref": "#/definitions/deploymentStepCommon",
+      "properties": {
+        "commandName": {
+          "$comment": "The friendly name of the command.",
+          "description": "The friendly name of the command displayed in the Tanium package editor.",
+          "type": "string"
+        },
+        "commandLine": {
+          "$comment": "The literal command line to run. Can contain both Windows and Tanium-style variables, e.g. %programfiles% or ||PROGRAMFILES||",
+          "description": "The literal command line to run. Can contain Tanium-style variables, e.g. ||PROGRAMFILES||",
+          "type": "string"
+        },
+        "commandUser": {
+          "$comment": "The profile under which to run the command, i.e. system or user.",
+          "description": "The profile under which to run the command, i.e. system or user.",
+          "type": "string",
+          "default": "system",
+          "enum": [
+            "system",
+            "user"
+          ]
+        },
+        "commandTimeoutInMinutes": {
+          "$comment": "The timeout for the command in minutes before terminating the process.",
+          "description": "The timeout for the command in minutes before terminating the process.",
+          "type": "integer",
+          "default": 5
+        },
+        "successCodes": {
+          "$comment": "The success codes for the command, e.g. 0, 3010, etc.",
+          "description": "An array of success codes that indicate the command was successful.",
+          "type": "array",
+          "default": ["0"],
+          "minItems": 1,
+          "items": {
+            "$comment": "A return code that will indicate the command was successful, e.g. 0.",
+            "type": "string",
+            "pattern": "^\\d+$"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "commandName",
+        "commandLine",
+        "commandUser",
+        "commandTimeoutInMinutes",
+        "successCodes"
+      ]
+    },
+    "deploymentStepCommon": {
+      "type": "object",
+      "properties": {
+        "definition": {
+          "$comment": "Common properties for deployment steps.",
+          "type": "object",
+          "properties": {
+            "type": {
+              "$comment": "The type of step, i.e. command, process, filesystem.",
+              "type": "string",
+              "enum": [
+                "command",
+                "process",
+                "filesystem"
+              ]
+            },
+            "onFail": {
+              "$comment": "The action to take if the step fails, i.e. continue or exit.",
+              "description": "The action to take if the step fails, i.e. continue or exit.",
+              "type": "string",
+              "default": "exit",
+              "enum": [
+                "continue",
+                "exit"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "onFail"
+          ]
+        }
+      }
+    },
+    "deployments": {
+      "$id": "/schemas/deployments",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$comment": "An array of deployment steps, each with a type and name.",
+      "description": "An array of deployment steps, with at least one of type = install, remove, or update.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "subGroups": { "$ref": "#/definitions/deploymentStepCommon" },
+          "type": {
+            "$comment": "The type of deployment step, e.g. 'install', 'remove', 'update'.",
+            "description": "The type of deployment step, e.g. 'install', 'remove', 'update'.",
+            "type": "string",
+            "enum": [
+              "install",
+              "remove",
+              "update"
+            ]
+          },
+          "name": {
+            "description": "The name of the deployment step. Matches type, except proper case.",
+            "type": "string",
+            "enum": [
+              "Install",
+              "Remove",
+              "Update"
+            ]
+          },
+          "steps": {
+            "description": "An array of steps to perform in this deployment type.",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/deploymentStepCommon"
+            }
+          },
+          "requireFiles": {
+            "description": "Whether this deployment step requires the files in 'files' to be present.",
+            "type": "boolean"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "steps",
+        "requireFiles"
+      ]
+    },
+    "files": {
+      "$id": "/schemas/files",
+      "required": [
+        "type", // local-file or remote-file
+        "name", // filename
+        "sha256", // hash
+        "size" // int. size in bytes
+      ],
+      "properties": {
+        "type": {
+          "$comment": "local-file or remote-file, which determines which other properties are used.",
+          "description": "The type of file: 'local-file' for a file directly uploaded to the Tanium server, or 'remote-file' for an external file URL.",
+          "type": "string",
+          "enum": [
+            "local-file",
+            "remote-file"
+          ]
+        },
+        "name": {
+          "$comment": "The name of the file, e.g. 'example.zip'.",
+          "description": "The name of the file. May include a preceding directory name and forward slash to copy it into a subfolder during deployment.",
+          "type": "string"
+        },
+        "sha256": {
+          "$comment": "The SHA-256 hash of the file.",
+          "description": "The SHA-256 hash of the file.",
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{64}$"
+        },
+        "size": {
+          "$comment": "The size of the file in bytes.",
+          "description": "The size of the file in bytes.",
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "if": {
+        "properties": {
+          "type": {
+            "const": "local-file"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/definitions/fileslocal"
+      },
+      "else": {
+        "if": {
+          "properties": {
+            "type": {
+              "const": "remote-file"
+            }
+          }
+        },
+        "then": {
+          "$ref": "#/definitions/filesremote"
+        },
+        "else": false
+      }
+    },
+    "fileslocal": {
+      "$id": "/schemas/fileslocal",
+      "required": [
+        "type", // local-file
+        "name", // file name
+        "size", // in bytes
+        "sha256",
+        "id" // guid without brackets
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "local-file"
+        },
+        "id": {
+          "$comment": "Only used for type: local-file",
+          "description": "GUID used to identify the file, without surrounding brackets.",
+          "type": "string",
+          "pattern": "^(?![{}])([a-fA-F0-9]{8})-([a-fA-F0-9]{4}-){3}([a-fA-F0-9]{12})$"
+        },
+        "fileCachedOnTaniumServer": {
+          "$comment": "Only used for type: local-file",
+          "default": true,
+          "type": "boolean"
+        },
+        "fileCachePercentComplete": {
+          "$comment": "Only used for type: local-file",
+          "description": "The percent completion of the file's transfer.",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "filesremote": {
+      "$id": "/schemas/filesremote",
+      "required": [
+        "type", // remote-file
+        "name", // e.g. 'example.zip'
+        "size", // in bytes
+        "sha256",
+        "location", // remote URI
+        "isDownloadedDirectlyByTaniumServer" // bool
+        // "uncompressedSize", // not sure what determines its use
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "remote-file"
+        },
+        "uncompressedSize": {
+          "$comment": "Only used for type: remote-file. Not sure what determines its use.",
+          "description": "Not sure what this is used for. as it's present in some packages but not others, and not just for archive files.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "location": {
+          "$comment": "Only used for type: remote-file",
+          "description": "URL from which to download the remote file.",
+          "type": "string"
+        },
+        "isDownloadedDirectlyByTaniumServer": {
+          "$comment": "Only used for type: remote-file",
+          "description": "Whether the file is auto-imported every X versions... I think?",
+          "type": "boolean"
+        }
+      }
+    },
+    "verificationoperator": {
+      "description": "All operators to compare the field and value and/or secondfield and secondvalue.",
+      "type": "string",
+      "default": "eq",
+      "enum": [
+        "eq",
+        "ne",
+        "gt",
+        "ge",
+        "lt",
+        "le",
+        "starts_with",
+        "contains",
+        "not_contains",
+        "regex",
+        "not_regex",
+        "exists",
+        "notexist",
+        "running",
+        "notrunning",
+        "returns_results",
+        "returns_no_results"
+      ]
+    },
+    "numericoperator": {
+      "description": "Operators for numeric and version comparisons. Used in whole or part for installed_application_version, registry_value, file_version, file_size.",
+      "type": "string",
+      "default": "eq",
+      "enum": [
+        "eq",
+        "ne",
+        "lt",
+        "le",
+        "gt",
+        "ge"
+      ]
+    },
+    "applicationoperator": {
+      "description": "Operators for application name comparisons.",
+      "type": "string",
+      "default": "eq",
+      "enum": [
+        "eq",
+        "starts_with",
+        "contains",
+        "not_contains",
+        "regex",
+        "not_regex"
+      ]
+    },
+    "verificationfield": {
+      "description": "The pre-defined field to use in verifying the install requirements, update detection, and install detection.",
+      "type": "string",
+      "items": [
+        {
+          "type": "string",
+          "title": "installed_application_name",
+          "description": "Checks for installed applications by name.",
+          "default": "installed_application_name"
+        },
+        {
+          "type": "string",
+          "title": "installed_application_version",
+          "description": "Checks for installed applications by name and version.",
+          "default": "installed_application_version"
+        },
+        {
+          "type": "string",
+          "title": "file_path",
+          "description": "Checks the filesystem for a given path.",
+          "default": "file_path"
+        },
+        {
+          "type": "string",
+          "title": "file_hash",
+          "description": "Checks a file hash.",
+          "default": "file_hash"
+        },
+        {
+          "type": "string",
+          "title": "file_size",
+          "description": "Checks the size in bytes of a file.",
+          "default": "file_size"
+        },
+        {
+          "type": "string",
+          "title": "file_version",
+          "description": "Checks the version of a file.",
+          "default": "file_version"
+        },
+        {
+          "type": "string",
+          "title": "registry_key",
+          "description": "Checks the existence of a registry key.",
+          "default": "registry_key"
+        },
+        {
+          "type": "string",
+          "title": "registry_value",
+          "description": "Verifies a registry key and value.",
+          "default": "registry_value"
+        },
+        {
+          "type": "string",
+          "title": "wmi_query",
+          "description": "Verifies against a WMI query.",
+          "default": "wmi_query"
+        },
+        {
+          "type": "string",
+          "title": "service_name",
+          "description": "Verifies a Windows service.",
+          "default": "service_name"
+        },
+        {
+          "type": "string",
+          "title": "system_uptime",
+          "description": "Verifies system uptime.",
+          "default": "system_uptime"
+        }
+      ],
+      "enum": [
+        "installed_application_name",
+        "installed_application_version",
+        "file_path",
+        "file_hash",
+        "file_size",
+        "file_version",
+        "registry_key",
+        "registry_value",
+        "wmi_query",
+        "service_name",
+        "system_uptime"
+      ]
+    },
+    "verification": {
+      "$id": "/schemas/verification",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "description": "A verification object that contains the rules for required software, update detection, and install verification.",
+      "type": "object",
+      "properties": {
+        "andFlag": { "type": "boolean" },
+        "subGroups": { "$ref": "#/definitions/verification/definitions/subGroups" }
+      },
+      "required": ["andFlag", "subGroups"],
+      "definitions": {
+        "filter": {
+          "type": "object",
+          "required": [
+            "field",
+            "operator",
+            "value"
+          ],
+          "properties": {
+            "field": {
+              "$ref": "#/definitions/verificationfield"
+            },
+            "operator": {
+              "$ref": "#/definitions/verificationoperator"
+            },
+            "value": {
+              "type": "string"
+            },
+            "secondOperator": {
+              "$ref": "#/definitions/verificationoperator"
+            },
+            "secondValue": {
+              "type": "string"
+            }
+          }
+        },
+        "subGroups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "oneof": [
+              {"$ref": "#/definitions/verification/definitions/filter"}
+            ]
+          }
+        }
+      }
+    },
+    "verificationApplicationName": {
+      "$id": "/schemas/verificationApplicationName",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "description": "Verification for an installed application name.",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "required": [
+            "field",
+            "operator",
+            "value",
+            "multiValues"
+          ],
+          "properties": {
+            "field": {
+              "const": "installed_application_name"
+            },
+            "operator": {
+              "$ref": "#/definitions/applicationoperator"
+            },
+            "value": {
+              "description": "The name pattern to match against.",
+              "type": "string"
+            },
+            "multiValues": {
+              "description": "The registry areas to check for the application.",
+              "type": "array",
+              "enum": [
+                "32-bit",
+                "64-bit",
+                "active user",
+                "msix"
+              ],
+              "minItems": 1
+            }
+          }
+        }
+      }
+    },
+    "verificationApplicationVersion": {
+      "$id": "/schemas/verificationApplicationVersion",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "description": "Verification for an installed application version.",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "required": [
+            "field",
+            "operator",
+            "value",
+            "secondOperator",
+            "secondValue",
+            "multiValues"
+          ],
+          "properties": {
+            "field": {
+              "const": "installed_application_version"
+            },
+            "operator": {
+              "$ref": "#/definitions/applicationoperator"
+            },
+            "value": {
+              "description": "The name pattern to match against.",
+              "type": "string"
+            },
+            "secondOperator": {
+              "description": "The operator to compare the application version against.",
+              "$ref": "#/definitions/numericoperator"
+            },
+            "secondValue": {
+              "description": "The application version to match.",
+              "type": "string",
+              "pattern": "^(\\d+\\.\\d+)(\\.\\d+){0,2}$"
+            },
+            "multiValues": {
+              "description": "The registry areas to check for the application.",
+              "type": "array",
+              "enum": [
+                "32-bit",
+                "64-bit",
+                "active user",
+                "msix"
+              ],
+              "minItems": 1
+            }
+          }
+        }
+      }
+    },
+    "verificationRegistryKey": {
+      "$id": "/schemas/verificationRegistryKey",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "description": "Verification for registry keys.",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "required": [
+            "field",
+            "operator",
+            "value"
+          ],
+          "properties": {
+            "field": {
+              "const": "registry_key"
+            },
+            "operator": {
+              "enum": [
+                "exists",
+                "notexist"
+              ]
+            },
+            "value": {
+              "description": "The registry key to verify.",
+              "type": "string",
+              "pattern": "^(HKEY_\\w+|HK[A-Z]+)(\\\\[\\w ,.+-]+)+\\\\?$"
+            }
+          }
+        }
+      }
+    },
+    "verificationRegistryValue": {
+      "$id": "/schemas/verificationRegistryValue",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "description": "Verification for registry values.",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "required": [
+            "field",
+            "operator",
+            "value",
+            "secondValue"
+          ],
+          "properties": {
+            "field": {
+              "const": "registry_value"
+            },
+            "operator": {
+              "items": {
+                "$ref": "#/definitions/numericoperator",
+                "type": "string",
+                "enum": [
+                  "contains",
+                  "not_contains",
+                  "regex"
+                ]
+              }
+            },
+            "value": {
+              "description": "The registry key and value to verify. The value name is the last element in the registry key.",
+              "type": "string",
+              "pattern": "^(HKEY_\\w+|HK[A-Z]+)(\\\\[\\w ,.+-]+)+$"
+            },
+            "secondValue": {
+              "description": "The value to compare against, e.g. '1', 'true', '0x01', etc.",
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "verificationFilePath": {
+      "$id": "/schemas/verificationFilePath",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "description": "Verification for a file path.",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "required": [
+            "field",
+            "operator",
+            "value"
+          ],
+          "properties": {
+            "field": {
+              "const": "file_path"
+            },
+            "operator": {
+              "enum": [
+                "exists",
+                "notexist"
+              ]
+            },
+            "value": {
+              "description": "The file path to verify.",
+              "type": "string",
+              "pattern": "^(\\\\\\\\|[a-z]:\\\\).+$"
+            }
+          }
+        }
+      }
+    },
+    "verificationFileVersion": {
+      "$id": "/schemas/verificationFileVersion",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "description": "Verification for a file version.",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "required": [
+            "field",
+            "operator",
+            "value",
+            "secondValue"
+          ],
+          "properties": {
+            "field": {
+              "const": "file_version"
+            },
+            "operator": {
+              "$ref": "#/definitions/numericoperator"
+            },
+            "value": {
+              "description": "The file path whose version will be checked.",
+              "type": "string",
+              "pattern": "^(\\\\\\\\|[a-z]:\\\\).+$"
+            },
+            "secondValue": {
+              "description": "The version to compare against, e.g. '1.0.0'.",
+              "type": "string",
+              "pattern": "^(\\d+\\.\\d+)(\\.\\d+){0,2}$"
+            }
+          }
+        }
+      }
+    },
+    "verificationFileSize": {
+      "$id": "/schemas/verificationFileSize",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "description": "Verification for a file size.",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "required": [
+            "field",
+            "operator",
+            "value",
+            "secondValue"
+          ],
+          "properties": {
+            "field": {
+              "const": "file_size"
+            },
+            "operator": {
+              "$ref": "#/definitions/numericoperator"
+            },
+            "value": {
+              "description": "The file path whose size will be checked.",
+              "type": "string",
+              "pattern": "^(\\\\\\\\|[a-z]:\\\\).+$"
+            },
+            "secondValue": {
+              "description": "The size (in bytes) to compare against.",
+              "type": "string",
+              "pattern": "^\\d+$"
+            }
+          }
+        }
+      }
+    },
+    "verificationFileHash": {
+      "$id": "/schemas/verificationFileHash",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "description": "Verification for a file hash.",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "required": [
+            "field",
+            "operator",
+            "value",
+            "secondOperator",
+            "secondValue"
+          ],
+          "properties": {
+            "field": {
+              "const": "file_hash"
+            },
+            "operator": {
+              "description": "The hash algorithm to use for the file hash.",
+              "enum": [
+                "sha1",
+                "sha256",
+                "md5"
+              ]
+            },
+            "value": {
+              "description": "The file whose hash will be checked.",
+              "type": "string",
+              "pattern": "^(\\\\\\\\|[a-z]:\\\\).+$"
+            },
+            "secondOperator": {
+              "enum": [
+                "eq",
+                "ne"
+              ]
+            },
+            "secondValue": {
+              "description": "The value of the hash.",
+              "type": "string",
+              "pattern": "^([a-fA-F0-9]{32}|[a-fA-F0-9]{40}|[a-fA-F0-9]{64})$"
+            }
+          }
+        }
+      }
+    },
+    "verificationServiceName": {
+      "$id": "/schemas/verificationServiceName",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "description": "Verification for a Windows service.",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "required": [
+            "field",
+            "operator",
+            "value"
+          ],
+          "properties": {
+            "field": {
+              "const": "service_name"
+            },
+            "operator": {
+              "description": "The operator to apply to the service.",
+              "enum": [
+                "exists",
+                "notexist",
+                "running",
+                "notrunning"
+              ]
+            },
+            "value": {
+              "description": "The service name to check.",
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "verificationWmiQuery": {
+      "$id": "/schemas/verificationWmiQuery",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "description": "Verification for a WMI query.",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "required": [
+            "field",
+            "operator",
+            "value",
+            "secondValue"
+          ],
+          "properties": {
+            "field": {
+              "const": "wmi_query"
+            },
+            "operator": {
+              "description": "The operator to apply to the query results.",
+              "enum": [
+                "returns_results",
+                "returns_no_results"
+              ]
+            },
+            "value": {
+              "description": "The WMI namespace to run the query against.",
+              "type": "string",
+              "pattern": "^root\\\\[\\w\\\\.]+$"
+            },
+            "secondValue": {
+              "description": "The WMI query to run.",
+              "type": "string",
+              "pattern": "^SELECT .+ FROM ([a-z]+)(\\w+)( WHERE .+)?$"
+            }
+          }
+        }
+      }
+    },
+    "verificationSystemUptime": {
+      "$id": "/schemas/verificationSystemUptime",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "description": "Verification for system uptime.",
+      "type": "object",
+      "properties": {
+        "filter": {
+          "type": "object",
+          "required": [
+            "field",
+            "operator",
+            "value",
+            "secondOperator"
+          ],
+          "properties": {
+            "field": {
+              "const": "system_uptime"
+            },
+            "operator": {
+              "description": "The operator to apply to the time length.",
+              "enum": [
+                "ge",
+                "le"
+              ]
+            },
+            "value": {
+              "description": "The time value to compare against.",
+              "type": "number"
+            },
+            "secondOperator": {
+              "description": "The unit of time to use.",
+              "type": "string",
+              "enum": [
+                "hours",
+                "days",
+                "weeks"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+  //#endregion Defs
+}

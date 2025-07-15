@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="doc" nillable="true" type="doc">
+    <xs:annotation>
+      <xs:documentation>
+        This schema defines the structure of XML documentation comments used in .NET assemblies.
+        It includes elements for assembly information, member documentation, and various content types.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="doc">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="assembly" type="assembly" />
+      <xs:element minOccurs="1" maxOccurs="1" name="members" type="members" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="assembly">
+    <xs:annotation>
+      <xs:documentation>
+        Represents the assembly information in XML documentation comments.
+        It contains the name of the assembly.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="name" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="members">
+    <xs:annotation>
+      <xs:documentation>
+        Contains documentation for members of the assembly.
+        Each member can have various documentation elements such as summary, remarks, examples, etc.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element minOccurs="1" maxOccurs="1" name="member" type="member" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="member">
+    <xs:annotation>
+      <xs:documentation>
+        Represents a member of the assembly, such as a class, method, property, etc.
+        It contains various documentation elements that describe the member.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="1" name="summary" type="summary" />
+        <xs:element minOccurs="0" maxOccurs="1" name="remarks" type="remarks" />
+        <xs:element minOccurs="0" maxOccurs="1" name="example" type="example" />
+        <xs:element minOccurs="0" maxOccurs="1" name="value" type="value" />
+        <xs:element minOccurs="0" maxOccurs="1" name="returns" type="returns" />
+        <xs:element minOccurs="0" maxOccurs="1" name="param" type="param" />
+        <xs:element minOccurs="0" maxOccurs="1" name="typeparam" type="typeparam" />
+        <xs:element minOccurs="0" maxOccurs="1" name="code" type="code" />
+        <xs:element minOccurs="0" maxOccurs="1" name="include" type="include" />
+        <xs:element minOccurs="0" maxOccurs="1" name="exception" type="exception" />
+        <xs:element minOccurs="0" maxOccurs="1" name="permission" type="permission" />
+        <xs:element minOccurs="0" maxOccurs="1" name="seealso" type="seealso" />
+        <xs:element minOccurs="0" maxOccurs="1" name="list" type="list" />
+        <xs:element minOccurs="0" maxOccurs="1" name="filterpriority" type="filterpriority" />
+        <xs:element minOccurs="0" maxOccurs="1" name="completionlist" type="completionlist" />
+        <xs:element minOccurs="0" maxOccurs="1" name="PermissionSet" type="PermissionSet" />
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="name" use="required">
+      <xs:annotation>
+        <xs:documentation>
+          The name of the member, which typically follows the format of "N:Namespace.TypeName.MemberName" for types or "M:Namespace.TypeName.MethodName" for methods.
+        </xs:documentation>
+      </xs:annotation>
+      <!-- <xs:simpleType>
+        <xs:restriction base="xs:string">
+        <xs:pattern value="^(?:(?:[NTFPME!]|Overload):)?(?:[a-z_][a-z0-9_]*\.)*(?:#?[a-z_][\w_]*)(?:``[0-9]+)?(?:\((?:.*)\))?$"/>
+      </xs:restriction>
+      </xs:simpleType> -->
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="summary" mixed="true">
+    <xs:complexContent>
+      <xs:extension base="content">
+        <xs:sequence>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="para" type="para"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="remarks" mixed="true">
+    <xs:complexContent>
+      <xs:extension base="content">
+        <xs:sequence>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="para" type="para"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="content" mixed="true" abstract="true">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="c" type="c"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="code" type="code"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="see" type="see"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="list" type="list"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="paramref" type="paramref"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="typeparamref" type="typeparamref"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="para" mixed="true">
+    <xs:complexContent>
+      <xs:extension base="content" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="returns" mixed="true">
+    <xs:complexContent>
+      <xs:extension base="content">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the return value of a method or constructor.
+            It contains documentation for the return type, including its description.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="value" mixed="true">
+    <xs:complexContent>
+      <xs:extension base="content">
+        <xs:annotation>
+          <xs:documentation>
+            Represents the value of a property or field.
+            It contains documentation for the value, including its description.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="example" mixed="true">
+    <xs:complexContent>
+      <xs:extension base="content">
+        <xs:annotation>
+          <xs:documentation>
+            Represents an example of how to use a method, property, or class.
+            It can include code snippets and explanations.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="para" type="para"/>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="code" type="code"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="exception" mixed="true">
+    <xs:complexContent>
+      <xs:annotation>
+        <xs:documentation>
+          Represents an exception that can be thrown by a method or constructor.
+          It contains documentation for the exception type, including its name and description.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:extension base="content">
+        <xs:attribute name="cref" use="required" type="identifier">
+          <xs:annotation>
+            <xs:documentation>
+              The cref attribute specifies the fully qualified name of the exception type being documented.
+              It should follow the format "T:Namespace.TypeName" for types.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="param" mixed="true">
+    <xs:complexContent>
+      <xs:annotation>
+        <xs:documentation>
+          Represents a parameter of a method or constructor.
+          It contains documentation for the parameter, including its name and description.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:extension base="content">
+        <xs:attribute name="name" use="required" type="name">
+          <xs:annotation>
+            <xs:documentation>
+              The name of the parameter being documented. This should match the parameter name in the method signature.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="typeparam" mixed="true">
+    <xs:complexContent>
+      <xs:extension base="content">
+        <xs:attribute name="name" use="required" type="name"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="filterpriority">
+    <xs:restriction base="xs:integer"/>
+  </xs:simpleType>
+
+  <xs:complexType name="c" mixed="true">
+  </xs:complexType>
+
+  <xs:complexType name="code" mixed="true">
+    <xs:attribute name="language" use="optional" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="include">
+    <xs:attribute name="file" use="optional" type="xs:string"/>
+    <xs:attribute name="path" use="optional" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="paramref" mixed="true">
+    <xs:attribute name="name" use="optional" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="typeparamref" mixed="true">
+    <xs:attribute name="name" use="optional" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="permission" mixed="true">
+    <xs:attribute name="cref" use="optional" type="identifier"/>
+  </xs:complexType>
+
+  <xs:complexType name="see" mixed="true">
+    <xs:attribute name="cref" use="optional" type="identifier"/>
+    <xs:attribute name="href" use="optional" type="identifier"/>
+    <xs:attribute name="langword" use="optional" type="identifier"/>
+  </xs:complexType>
+
+  <xs:complexType name="a" mixed="true">
+    <xs:attribute name="href" use="optional" type="identifier"/>
+  </xs:complexType>
+
+  <xs:complexType name="seealso" mixed="true">
+    <xs:attribute name="cref" use="optional" type="identifier"/>
+    <xs:attribute name="href" use="optional" type="identifier"/>
+    <xs:attribute name="langword" use="optional" type="identifier"/>
+  </xs:complexType>
+
+  <xs:complexType name="completionlist" mixed="true">
+    <xs:attribute name="cref" use="optional" type="identifier"/>
+  </xs:complexType>
+
+  <xs:complexType name="list">
+    <xs:sequence>
+      <xs:element name="listheader" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="term" type="xs:string" minOccurs="0" />
+            <xs:element name="description" type="xs:string" minOccurs="0" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element name="term" minOccurs="0">
+              <xs:complexType mixed="true">
+                <xs:complexContent>
+                  <xs:extension base="content">
+                    <xs:annotation>
+                      <xs:documentation>
+                        A term that can be a literal string or a reference to another element.
+                        It can include language keywords or identifiers.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:extension>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="description" minOccurs="0">
+              <xs:complexType mixed="true">
+                <xs:complexContent>
+                  <xs:extension base="content">
+                    <xs:annotation>
+                      <xs:documentation>
+                        A description that can include text, code snippets, or references to other elements.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:extension>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string" />
+  </xs:complexType>
+
+  <xs:complexType name="PermissionSet">
+    <xs:sequence>
+      <xs:element name="IPermission" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:any processContents="skip"/>
+          </xs:sequence>
+          <xs:attribute name="class" use="required" type="xs:string"/>
+          <xs:attribute name="version" use="required" type="xs:integer"/>
+          <xs:attribute name="Flags" use="optional" type="xs:string"/>
+          <xs:attribute name="Unrestricted" use="optional" type="xs:boolean" default="false" />
+          <xs:anyAttribute processContents="skip"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string" />
+  </xs:complexType>
+
+  <xs:simpleType name="identifier">
+    <xs:restriction base="xs:string">
+      <!--<xs:pattern value="^(?i-:(?:(?:N|T|F|P|M|E|!|(?:Overload)):|\.|:)?(?:[a-z_][\w_]*\.)*(?:#?[a-z_][\w_]*)(?:``(?:\d+))?(?:\((?:.*)\))?).*$"/>-->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="name">
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

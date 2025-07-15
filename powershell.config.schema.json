@@ -1,0 +1,454 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://json.schemastore.org/powershell.config",
+  "$comment": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.4",
+  "title": "PowerShell Configuration JSON Schema",
+  "description": "Schema for the powershell.config.json file using documented configuration settings for PowerShell Version 7.4 LTS.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "DisableImplicitWinCompat": {
+      "type": "boolean",
+      "description": "Disables the Windows PowerShell Compatibility feature when set to true."
+    },
+    "WindowsPowerShellCompatibilityModuleDenyList": {
+      "type": "array",
+      "description": "List of module names to exclude from Windows PowerShell Compatibility.",
+      "items": {
+        "type": "string",
+        "minItems": 0
+      }
+    },
+    "WindowsPowerShellCompatibilityNoClobberModuleList": {
+      "type": "array",
+      "description": "List of module names that should not be clobbered by loading the Windows PowerShell 5.1 version.",
+      "items": {
+        "type": "string",
+        "minItems": 0
+      }
+    },
+    "ExperimentalFeatures": {
+      "description": "Names of experimental features to enable in PowerShell.",
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 0,
+      "default": [],
+      "items": {
+        "type": "string",
+        "anyOf": [
+          {
+            "title": "PSCommandNotFoundSuggestion",
+            "const": "PSCommandNotFoundSuggestion",
+            "description": "Recommends potential commands based on fuzzy matching search after a CommandNotFoundException.",
+            "type": "string"
+          },
+          {
+            "title": "PSCommandWithArgs",
+            "const": "PSCommandWithArgs",
+            "description": "This feature enables the -CommandWithArgs parameter for pwsh. This parameter allows you to execute a PowerShell command with arguments. Unlike -Command, this parameter populates the $args built-in variable that can be used by the command.",
+            "type": "string"
+          },
+          {
+            "title": "PSFeedbackProvider",
+            "const": "PSFeedbackProvider",
+            "description": "When you enable this feature, PowerShell uses a new feedback provider to give you feedback when a command can't be found. The feedback provider is extensible, and can be implemented by third-party modules. The feedback provider can be used by other subsystems, such as the predictor subsystem, to provide predictive IntelliSense results.",
+            "type": "string"
+          },
+          {
+            "title": "PSLoadAssemblyFromNativeCode",
+            "const": "PSLoadAssemblyFromNativeCode",
+            "description": "Exposes an API to allow assembly loading from native code.",
+            "type": "string"
+          },
+          {
+            "title": "PSModuleAutoLoadSkipOfflineFiles",
+            "const": "PSModuleAutoLoadSkipOfflineFiles",
+            "description": "With this feature enabled, if a user's PSModulePath contains a folder from a cloud provider, such as OneDrive, PowerShell no longer triggers the download of all files contained within that folder. Any file marked as not downloaded are skipped. Users who use cloud providers to sync their modules between machines should mark the module folder as Pinned or the equivalent status for providers other than OneDrive. Marking the module folder as Pinned ensures that the files are always kept on disk.",
+            "type": "string"
+          },
+          {
+            "title": "PSSubsystemPluginModel",
+            "const": "PSSubsystemPluginModel",
+            "description": "This feature enables the subsystem plugin model in PowerShell. The feature makes it possible to separate components of System.Management.Automation.dll into individual subsystems that reside in their own assembly. This separation reduces the disk footprint of the core PowerShell engine and allows these components to become optional features for a minimal PowerShell installation.",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "LogChannels": {
+      "type": "string",
+      "description": "Specifies logging channels for Linux and macOS."
+    },
+    "LogIdentity": {
+      "type": "string",
+      "description": "Specifies the log identity for non-Windows platforms."
+    },
+    "LogKeywords": {
+      "type": "string",
+      "description": "Specifies logging keywords for non-Windows platforms."
+    },
+    "LogLevel": {
+      "type": "string",
+      "description": "Specifies the logging level for non-Windows platforms.",
+      "enum": [
+        "Critical",
+        "Error",
+        "Warning",
+        "Informational",
+        "Verbose",
+        "Debug"
+      ]
+    },
+    "Microsoft.PowerShell:ExecutionPolicy": {
+      "type": "string",
+      "description": "Configures the execution policy for PowerShell sessions.",
+      "oneOf": [
+        {
+          "title": "Restricted",
+          "const": "Restricted",
+          "type": "string",
+          "$comment": "- The default execution policy for Windows client computers.\n- Permits individual commands, but does not allow scripts.\n- Prevents running of all script files, including formatting and configuration files (.ps1xml), module script files (.psm1), and PowerShell profiles (.ps1).",
+          "description": "No scripts can be run. PowerShell can only be used in interactive mode."
+        },
+        {
+          "title": "AllSigned",
+          "const": "AllSigned",
+          "type": "string",
+          "$comment": "- Scripts can run.\n- Requires that all scripts and configuration files be signed by a trusted publisher, including scripts that you write on the local computer.\n- Prompts you before running scripts from publishers that you haven't yet classified as trusted or untrusted.\n- Risks running signed, but malicious, scripts.",
+          "description": "Only scripts signed by a trusted publisher can be run."
+        },
+        {
+          "title": "RemoteSigned",
+          "const": "RemoteSigned",
+          "type": "string",
+          "$comment": "- The default execution policy for Windows server computers.\n- Scripts can run.\n- Requires a digital signature from a trusted publisher on scripts and configuration files that are downloaded from the internet which includes email and instant messaging programs.\n- Doesn't require digital signatures on scripts that are written on the local computer and not downloaded from the internet.\n- Runs scripts that are downloaded from the internet and not signed, if the scripts are unblocked, such as by using the Unblock-File cmdlet.\n- Risks running unsigned scripts from sources other than the internet and signed scripts that could be malicious.",
+          "description": "Scripts created locally can be run. Scripts downloaded from the internet must be signed by a trusted publisher."
+        },
+        {
+          "title": "Unrestricted",
+          "const": "Unrestricted",
+          "type": "string",
+          "$comment": "- The default execution policy for non-Windows computers and cannot be changed.\n- Unsigned scripts can run. There is a risk of running malicious scripts.\n- Warns the user before running scripts and configuration files that are not from the local intranet zone.",
+          "description": "All scripts can be run, but a warning is displayed for scripts downloaded from the internet."
+        },
+        {
+          "title": "Bypass",
+          "const": "Bypass",
+          "type": "string",
+          "$comment": "- Nothing is blocked and there are no warnings or prompts.\n- This execution policy is designed for configurations in which a PowerShell script is built into a larger application or for configurations in which PowerShell is the foundation for a program that has its own security model.",
+          "description": "No restrictions. All scripts can be run without warnings or prompts."
+        },
+        {
+          "title": "Undefined",
+          "const": "Undefined",
+          "type": "string",
+          "$comment": "- There is no execution policy set in the current scope.\n- If the execution policy in all scopes is UNDEFINED, the effective execution policy is RESTRICTED for Windows clients and REMOTESIGNED for Windows Server.\n",
+          "description": "No execution policy is set. The system uses the default execution policy, which is Restricted for clients and RemoteSigned for servers."
+        }
+      ]
+    },
+    "PSModulePath": {
+      "type": "string",
+      "description": "Overrides the PSModulePath settings for this PowerShell session. Supports environment variables enclosed in '%'."
+    },
+    "PowerShellPolicies": {
+      "type": "object",
+      "description": "Contains settings that mirror the Group Policy settings for PowerShell.",
+      "additionalProperties": false,
+      "properties": {
+        "ExecutionPolicy": {
+          "type": "object",
+          "description": "Sets the PowerShell Execution Policy.",
+          "properties": {
+            "ExecutionPolicy": {
+              "type": "string",
+              "enum": [
+                "Restricted",
+                "AllSigned",
+                "RemoteSigned",
+                "Unrestricted",
+                "Bypass",
+                "Undefined"
+              ],
+              "description": "Specifies the execution policy."
+            }
+          },
+          "required": [
+            "ExecutionPolicy"
+          ],
+          "additionalProperties": false
+        },
+        "ConsoleSessionConfiguration": {
+          "type": "object",
+          "description": "Specifies the session configuration for all PowerShell sessions.",
+          "properties": {
+            "EnableConsoleSessionConfiguration": {
+              "type": "boolean",
+              "description": "Enables session configurations when set to true."
+            },
+            "ConsoleSessionConfigurationName": {
+              "type": [
+                "string",
+                "array"
+              ],
+              "description": "Specifies the name(s) of the configuration endpoint(s).",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "EnableConsoleSessionConfiguration",
+            "ConsoleSessionConfigurationName"
+          ],
+          "additionalProperties": false
+        },
+        "ModuleLogging": {
+          "type": "object",
+          "description": "Controls logging for PowerShell modules.",
+          "properties": {
+            "EnableModuleLogging": {
+              "type": "boolean",
+              "description": "Enables module logging when set to true."
+            },
+            "ModuleNames": {
+              "type": "array",
+              "description": "Specifies the names of modules to log.",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "EnableModuleLogging",
+            "ModuleNames"
+          ],
+          "additionalProperties": false
+        },
+        "ProtectedEventLogging": {
+          "type": "object",
+          "description": "Configures Protected Event Logging.",
+          "properties": {
+            "EnableProtectedEventLogging": {
+              "type": "boolean",
+              "description": "Enables Protected Event Logging when set to true."
+            },
+            "EncryptionCertificate": {
+              "type": "array",
+              "description": "List of certificates used for encryption.",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "EnableProtectedEventLogging",
+            "EncryptionCertificate"
+          ],
+          "additionalProperties": false
+        },
+        "ScriptBlockLogging": {
+          "type": "object",
+          "description": "Controls logging of PowerShell script blocks.",
+          "properties": {
+            "EnableScriptBlockLogging": {
+              "type": "boolean",
+              "description": "Enables logging of all PowerShell script input when set to true."
+            },
+            "EnableScriptBlockInvocationLogging": {
+              "type": "boolean",
+              "description": "Enables logging of script block start and stop events when set to true."
+            }
+          },
+          "required": [
+            "EnableScriptBlockLogging",
+            "EnableScriptBlockInvocationLogging"
+          ],
+          "additionalProperties": false
+        },
+        "ScriptExecution": {
+          "type": "object",
+          "description": "Sets the execution policy for scripts.",
+          "properties": {
+            "ExecutionPolicy": {
+              "type": "string",
+              "enum": [
+                "Restricted",
+                "AllSigned",
+                "RemoteSigned",
+                "Unrestricted",
+                "Bypass",
+                "Undefined"
+              ],
+              "description": "Specifies the execution policy."
+            }
+          },
+          "required": [
+            "ExecutionPolicy"
+          ],
+          "additionalProperties": false
+        },
+        "Transcription": {
+          "type": "object",
+          "description": "Configures transcription settings.",
+          "properties": {
+            "EnableTranscripting": {
+              "type": "boolean",
+              "description": "Enables transcription for all PowerShell sessions when set to true."
+            },
+            "EnableInvocationHeader": {
+              "type": "boolean",
+              "description": "Includes a header at the top of the transcription log file when set to true."
+            },
+            "OutputDirectory": {
+              "type": "string",
+              "description": "Specifies the directory to collect transcription log files."
+            }
+          },
+          "required": [
+            "EnableTranscripting"
+          ],
+          "additionalProperties": false
+        },
+        "UpdatableHelp": {
+          "type": "object",
+          "description": "Configures the default source path for Updatable Help.",
+          "properties": {
+            "DefaultSourcePath": {
+              "type": "string",
+              "description": "Sets the default value of the SourcePath parameter on the Update-Help cmdlet."
+            }
+          },
+          "required": [
+            "DefaultSourcePath"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "ConsoleSessionConfiguration": {
+      "type": "object",
+      "description": "Specifies the session configuration to be used for all PowerShell sessions.",
+      "properties": {
+        "EnableConsoleSessionConfiguration": {
+          "type": "boolean",
+          "description": "Enables session configurations when set to true."
+        },
+        "ConsoleSessionConfigurationName": {
+          "type": [
+            "string",
+            "array"
+          ],
+          "description": "Specifies the name(s) of the configuration endpoint(s).",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "EnableConsoleSessionConfiguration",
+        "ConsoleSessionConfigurationName"
+      ],
+      "additionalProperties": false
+    },
+    "ModuleLogging": {
+      "type": "object",
+      "description": "Controls logging for PowerShell modules.",
+      "properties": {
+        "EnableModuleLogging": {
+          "type": "boolean",
+          "description": "Enables module logging when set to true."
+        },
+        "ModuleNames": {
+          "type": "array",
+          "description": "Specifies the names of modules to log.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "EnableModuleLogging",
+        "ModuleNames"
+      ],
+      "additionalProperties": false
+    },
+    "ProtectedEventLogging": {
+      "type": "object",
+      "description": "Configures Protected Event Logging.",
+      "properties": {
+        "EnableProtectedEventLogging": {
+          "type": "boolean",
+          "description": "Enables Protected Event Logging when set to true."
+        },
+        "EncryptionCertificate": {
+          "type": "array",
+          "description": "List of certificates used for encryption.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "EnableProtectedEventLogging",
+        "EncryptionCertificate"
+      ],
+      "additionalProperties": false
+    },
+    "ScriptBlockLogging": {
+      "type": "object",
+      "description": "Controls logging of PowerShell script blocks.",
+      "properties": {
+        "EnableScriptBlockLogging": {
+          "type": "boolean",
+          "description": "Enables logging of all PowerShell script input when set to true."
+        },
+        "EnableScriptBlockInvocationLogging": {
+          "type": "boolean",
+          "description": "Enables logging of script block start and stop events when set to true."
+        }
+      },
+      "required": [
+        "EnableScriptBlockLogging",
+        "EnableScriptBlockInvocationLogging"
+      ],
+      "additionalProperties": false
+    },
+    "Transcription": {
+      "type": "object",
+      "description": "Configures transcription settings.",
+      "properties": {
+        "EnableTranscripting": {
+          "type": "boolean",
+          "description": "Enables transcription for all PowerShell sessions when set to true."
+        },
+        "EnableInvocationHeader": {
+          "type": "boolean",
+          "description": "Includes a header at the top of the transcription log file when set to true."
+        },
+        "OutputDirectory": {
+          "type": "string",
+          "description": "Specifies the directory to collect transcription log files."
+        }
+      },
+      "required": [
+        "EnableTranscripting"
+      ],
+      "additionalProperties": false
+    },
+    "UpdatableHelp": {
+      "type": "object",
+      "description": "Configures the default source path for Updatable Help.",
+      "properties": {
+        "DefaultSourcePath": {
+          "type": "string",
+          "description": "Sets the default value of the SourcePath parameter on the Update-Help cmdlet."
+        }
+      },
+      "required": [
+        "DefaultSourcePath"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
