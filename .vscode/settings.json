@@ -1,0 +1,91 @@
+{
+  "files.associations": {
+    "**/.git/config": "gitconfig",
+    "*.gitconfig": "gitconfig",
+  },
+  // JSON Schema Associations
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "**/powershell.config.json"
+      ],
+      "url": "https://raw.githubusercontent.com/TMA-2/Schemas/refs/heads/main/powershell.config.schema.json"
+    },
+    {
+      "fileMatch": [
+        "**/software-package.json",
+        "**/TaniumDeploy_*.json"
+      ],
+      "url": "https://raw.githubusercontent.com/TMA-2/Schemas/refs/heads/main/Tanium-Software-Package.schema.jsonc"
+    },
+  ],
+  //#region: Language Settings
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "other": "on",
+      "strings": "on",
+      "comments": "off"
+    },
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "editor.wordWrap": "on",
+  },
+  "[json][jsonc]": {
+    "editor.quickSuggestions": {
+      "other": "on",
+      "strings": "off",
+      "comments": "off"
+    },
+    "editor.suggest.insertMode": "replace",
+    "editor.snippetSuggestions": "bottom",
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.indentSize": "tabSize",
+    "editor.guides.indentation": true,
+  },
+  "[gitconfig]": {
+    "editor.defaultFormatter": "yy0931.gitconfig-lsp"
+  },
+  //#endregion: Language Settings
+  //#region: Extensions
+  "smartJsonSchema.defaultFolder": "schema",
+  "smartJsonSchema.defaultFilePrefix": "schema.",
+  // XML Schema Associations
+  "xml.codeLens.enabled": true,
+  "xml.fileAssociations": [
+    {
+      "pattern": "**/{ProjectBefore,ProjectAfter}.settings",
+      "systemId": "C:/Windows/Microsoft.NET/Framework64/v4.0.30319/MSBuild/Microsoft.Build.Core.xsd"
+    },
+    {
+      "pattern": "**/*.csproj",
+      "systemId": "C:/Windows/Microsoft.NET/Framework64/v4.0.30319/MSBuild/Microsoft.Build.Core.xsd"
+    },
+    {
+      "pattern": "**/{Microsoft.*,System.*,Presentation*,*.Assembly,mscorlib}.xml",
+      "systemId": "https://raw.githubusercontent.com/TMA-2/Schemas/refs/heads/main/XmlDocumentation.xsd"
+    },
+    {
+      "pattern": "**/*.snippet",
+      "systemId": "https://raw.githubusercontent.com/TMA-2/Schemas/refs/heads/main/snippetformat.xsd"
+    },
+    {
+      "pattern": "**/*.Format.ps1xml",
+      "systemId": "https://raw.githubusercontent.com/PowerShell/PowerShell/master/src/Schemas/Format.xsd"
+    },
+    {
+      "pattern": "**/*.Types.ps1xml",
+      "systemId": "https://raw.githubusercontent.com/PowerShell/PowerShell/master/src/Schemas/Types.xsd"
+    },
+    {
+      "pattern": "userDefineLangs/*.xml",
+      "systemId": "https://raw.githubusercontent.com/notepad-plus-plus/userDefinedLanguages/master/.validators/userDefineLangs.xsd"
+    },
+    {
+      "pattern": "autoCompletion/*.xml",
+      "systemId": "https://raw.githubusercontent.com/notepad-plus-plus/userDefinedLanguages/master/.validators/autoCompletion_swgmike.xsd"
+    }
+  ],
+  //#endregion: Extensions
+}

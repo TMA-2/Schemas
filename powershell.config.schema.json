@@ -1,17 +1,20 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://json.schemastore.org/powershell.config",
-  "$comment": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.4",
+  "$comment": "Refer to https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.5",
   "title": "PowerShell Configuration JSON Schema",
   "description": "Schema for the powershell.config.json file using documented configuration settings for PowerShell Version 7.4 LTS.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "DisableImplicitWinCompat": {
+      "$comment": "Windows-only. See https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.5#disableimplicitwincompat",
       "type": "boolean",
+      "default": true,
       "description": "Disables the Windows PowerShell Compatibility feature when set to true."
     },
     "WindowsPowerShellCompatibilityModuleDenyList": {
+      "$comment": "Windows-only. See https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.5#windowspowershellcompatibilitymoduledenylist",
       "type": "array",
       "description": "List of module names to exclude from Windows PowerShell Compatibility.",
       "items": {
@@ -20,6 +23,7 @@
       }
     },
     "WindowsPowerShellCompatibilityNoClobberModuleList": {
+      "$comment": "Windows-only. See https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.5#windowspowershellcompatibilitynoclobbermodulelist",
       "type": "array",
       "description": "List of module names that should not be clobbered by loading the Windows PowerShell 5.1 version.",
       "items": {
@@ -77,7 +81,7 @@
     },
     "LogChannels": {
       "type": "string",
-      "description": "Specifies logging channels for Linux and macOS."
+      "description": "Specifies logging channels for non-Windows platforms."
     },
     "LogIdentity": {
       "type": "string",
@@ -100,8 +104,9 @@
       ]
     },
     "Microsoft.PowerShell:ExecutionPolicy": {
+      "$comment": "Windows-only. See https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.5#executionpolicy",
       "type": "string",
-      "description": "Configures the execution policy for PowerShell sessions.",
+      "description": "Configures the execution policy for PowerShell sessions, determining what scripts can be run. By default, PowerShell uses the existing execution policy.",
       "oneOf": [
         {
           "title": "Restricted",
@@ -152,13 +157,14 @@
       "description": "Overrides the PSModulePath settings for this PowerShell session. Supports environment variables enclosed in '%'."
     },
     "PowerShellPolicies": {
+      "$comment": "Windows-only. See https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.5#powershellpolicies",
       "type": "object",
       "description": "Contains settings that mirror the Group Policy settings for PowerShell.",
       "additionalProperties": false,
       "properties": {
         "ExecutionPolicy": {
           "type": "object",
-          "description": "Sets the PowerShell Execution Policy.",
+          "description": "Configures the execution policy for PowerShell sessions, determining what scripts can be run. By default, PowerShell uses the existing execution policy.",
           "properties": {
             "ExecutionPolicy": {
               "type": "string",
@@ -268,7 +274,7 @@
         },
         "ScriptExecution": {
           "type": "object",
-          "description": "Sets the execution policy for scripts.",
+          "description": "Sets the execution policy for scripts. Takes precedence over the Microsoft.PowerShell:ExecutionPolicy setting.",
           "properties": {
             "ExecutionPolicy": {
               "type": "string",

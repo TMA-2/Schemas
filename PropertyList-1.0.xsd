@@ -1,0 +1,161 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.apple.com/DTDs/PropertyList-1.0"
+           xmlns:tns="http://www.apple.com/DTDs/PropertyList-1.0"
+           elementFormDefault="qualified">
+
+  <!-- Define the plistObject group that can contain any of the plist data types -->
+  <xs:group name="plistObject">
+    <xs:choice>
+      <xs:element ref="tns:array"/>
+      <xs:element ref="tns:data"/>
+      <xs:element ref="tns:date"/>
+      <xs:element ref="tns:dict"/>
+      <xs:element ref="tns:real"/>
+      <xs:element ref="tns:integer"/>
+      <xs:element ref="tns:string"/>
+      <xs:element ref="tns:true"/>
+      <xs:element ref="tns:false"/>
+    </xs:choice>
+  </xs:group>
+
+  <!-- The root plist element -->
+  <xs:element name="plist">
+    <xs:annotation>
+      <xs:appinfo>
+        <xs:version>1.1</xs:version>
+        <xs:vendor>TMA-2</xs:vendor>
+        <xs:description>Property List Schema converted from DTD to XSL.</xs:description>
+      </xs:appinfo>
+      <xs:documentation>The root element of a plist document. It must contain at least one plist object.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:group ref="tns:plistObject"/>
+      <xs:attribute name="version" type="xs:string" default="1.0">
+        <xs:annotation>
+          <xs:documentation>The version of the plist format. This is always "1.0" for this schema.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Array element - can contain zero or more plist objects -->
+  <xs:element name="array">
+    <xs:annotation>
+      <xs:documentation>Contents can be empty, or contain any number of plist objects.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="tns:plistObject" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Dictionary element - contains key-value pairs -->
+  <xs:element name="dict">
+    <xs:annotation>
+      <xs:documentation>Contents must contain an even number of plist objects, with the first of each pair being a key and the second being a value. The keys must be unique within the dict.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:assert test="count(*) mod 2 = 0">
+        <xs:annotation>
+          <xs:documentation>Dictionary must contain an even number of elements (key-value pairs).</xs:documentation>
+        </xs:annotation>
+      </xs:assert>
+      <xs:sequence>
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="tns:key"/>
+          <xs:group ref="tns:plistObject"/>
+        </xs:sequence>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Key element for dictionary keys -->
+  <xs:element name="key">
+    <xs:annotation>
+      <xs:documentation>Contents should be a string, and must be unique within the dict. The key is used to look up the value in the dict.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- String element -->
+  <xs:element name="string">
+    <xs:annotation>
+      <xs:documentation>UTF-8 encoded string. Contents can use entities (&amp;#xxxx;) for special Unicode values.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Data element for Base64 encoded data -->
+  <xs:element name="data">
+    <xs:annotation>
+      <xs:documentation>Contents interpreted as Base-64 encoded.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:base64Binary">
+        <xs:pattern value="([a-zA-Z0-9+/]{2,4})+={0,2}"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <!-- Date element -->
+  <xs:element name="date">
+    <xs:annotation>
+      <xs:documentation>Contents should conform to a subset of ISO 8601; E.g. yyyy-MM-ddThh:mm:ssZ. Smaller units may be omitted with a loss of precision.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:dateTime">
+        <xs:pattern value="^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <!-- Boolean true element -->
+  <xs:element name="true">
+    <xs:annotation>
+      <xs:documentation>Boolean constant true.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType/>
+  </xs:element>
+
+  <!-- Boolean false element -->
+  <xs:element name="false">
+    <xs:annotation>
+      <xs:documentation>Boolean constant false.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType/>
+  </xs:element>
+
+  <!-- Real (floating point) element -->
+  <xs:element name="real">
+    <xs:annotation>
+      <xs:documentation>Decimal string; reals can have exponents, or be Infinity (inf) or NaN (nan). Contents may optionally start with a sign or contain scientific notation.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:pattern value="^[+-]?\d+(\.\d*)?([Ee][+-]?\d+)?|[Ii]nf|[Nn]a[Nn]$"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <!-- Integer element -->
+  <xs:element name="integer">
+    <xs:annotation>
+      <xs:documentation>Contents should represent a (possibly signed) integer number in base 10</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:integer">
+        <xs:pattern value="[+-]?\d+"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+</xs:schema>

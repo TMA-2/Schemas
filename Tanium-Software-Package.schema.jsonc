@@ -621,13 +621,14 @@
       ]
     },
     "inUse": {
-      "description": "",
+      "description": "Indicates if the package is currently in use by any deployments or profiles.",
       "type": "object",
       "oneOf": [
         {
           "type": "null"
         },
         {
+          "type": "object",
           "required": [
             "bundles",
             "deployments",
