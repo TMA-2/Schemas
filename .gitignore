@@ -1,0 +1,5 @@
+# backup from malformed repo
+.gitold/
+*base.json
+*base.jsonc
+THRDriveMapping*
