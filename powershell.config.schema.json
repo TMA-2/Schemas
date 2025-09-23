@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://json.schemastore.org/powershell.config",
+  "$id": "https://raw.githubusercontent.com/TMA-2/Schemas/refs/heads/main/powershell.config.schema.json",
   "$comment": "Refer to https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.5",
   "title": "PowerShell Configuration JSON Schema",
   "description": "Schema for the powershell.config.json file using documented configuration settings for PowerShell Version 7.4 LTS.",
@@ -35,6 +35,7 @@
       "description": "Names of experimental features to enable in PowerShell.",
       "type": "array",
       "uniqueItems": true,
+      "additionalItems": true,
       "minItems": 0,
       "default": [],
       "items": {
@@ -47,15 +48,14 @@
             "type": "string"
           },
           {
-            "title": "PSCommandWithArgs",
-            "const": "PSCommandWithArgs",
-            "description": "This feature enables the -CommandWithArgs parameter for pwsh. This parameter allows you to execute a PowerShell command with arguments. Unlike -Command, this parameter populates the $args built-in variable that can be used by the command.",
-            "type": "string"
+            "title": "PSDesiredStateConfiguration.InvokeDscResource",
+            "const": "PSDesiredStateConfiguration.InvokeDscResource",
+            "description": "Enables compilation to MOF on non-Windows systems and enables the use of Invoke-DSCResource without an LCM.\nBeginning with PowerShell 7.2, the PSDesiredStateConfiguration module was removed and this feature is disabled by default. To enable this feature you must install the PSDesiredStateConfiguration v2.0.5 module from the PowerShell Gallery and enable the feature."
           },
           {
-            "title": "PSFeedbackProvider",
-            "const": "PSFeedbackProvider",
-            "description": "When you enable this feature, PowerShell uses a new feedback provider to give you feedback when a command can't be found. The feedback provider is extensible, and can be implemented by third-party modules. The feedback provider can be used by other subsystems, such as the predictor subsystem, to provide predictive IntelliSense results.",
+            "title": "PSSubsystemPluginModel",
+            "const": "PSSubsystemPluginModel",
+            "description": "This feature enables the subsystem plugin model in PowerShell. The feature makes it possible to separate components of System.Management.Automation.dll into individual subsystems that reside in their own assembly. This separation reduces the disk footprint of the core PowerShell engine and allows these components to become optional features for a minimal PowerShell installation.",
             "type": "string"
           },
           {
@@ -65,15 +65,39 @@
             "type": "string"
           },
           {
+            "title": "PSFeedbackProvider",
+            "const": "PSFeedbackProvider",
+            "description": "When you enable this feature, PowerShell uses a new feedback provider to give you feedback when a command can't be found. The feedback provider is extensible, and can be implemented by third-party modules. The feedback provider can be used by other subsystems, such as the predictor subsystem, to provide predictive IntelliSense results.",
+            "type": "string"
+          },
+          {
             "title": "PSModuleAutoLoadSkipOfflineFiles",
             "const": "PSModuleAutoLoadSkipOfflineFiles",
             "description": "With this feature enabled, if a user's PSModulePath contains a folder from a cloud provider, such as OneDrive, PowerShell no longer triggers the download of all files contained within that folder. Any file marked as not downloaded are skipped. Users who use cloud providers to sync their modules between machines should mark the module folder as Pinned or the equivalent status for providers other than OneDrive. Marking the module folder as Pinned ensures that the files are always kept on disk.",
             "type": "string"
           },
           {
-            "title": "PSSubsystemPluginModel",
-            "const": "PSSubsystemPluginModel",
-            "description": "This feature enables the subsystem plugin model in PowerShell. The feature makes it possible to separate components of System.Management.Automation.dll into individual subsystems that reside in their own assembly. This separation reduces the disk footprint of the core PowerShell engine and allows these components to become optional features for a minimal PowerShell installation.",
+            "title": "PSCommandWithArgs",
+            "const": "PSCommandWithArgs",
+            "description": "This feature enables the -CommandWithArgs parameter for pwsh. This parameter allows you to execute a PowerShell command with arguments. Unlike -Command, this parameter populates the $args built-in variable that can be used by the command.",
+            "type": "string"
+          },
+          {
+            "title": "PSNativeWindowsTildeExpansion",
+            "const": "PSNativeWindowsTildeExpansion",
+            "description": "When this feature is enabled, PowerShell expands unquoted tilde (~) to the user's current home folder before invoking native commands. The following examples show how the feature works.\nWith the feature disabled, the tilde is passed to the native command as a literal string.",
+            "type": "string"
+          },
+          {
+            "title": "PSRedirectToVariable",
+            "const": "PSRedirectToVariable",
+            "description": "When enabled, this feature adds support for redirecting to the Variable: drive. This feature allows you to redirect data to a variable using the Variable:name syntax. PowerShell inspects the target of the redirection and if it uses the Variable provider it calls Set-Variable rather than Out-File.",
+            "type": "string"
+          },
+          {
+            "title": "PSSerializeJSONLongEnumAsNumber",
+            "const": "PSSerializeJSONLongEnumAsNumber",
+            "description": "This feature enables the cmdlet ConvertTo-Json to serialize any enum values based on Int64/long or UInt64/ulong as a numeric value rather than the string representation of that enum value. This aligns the behavior of enum serialization with other enum base types where the cmdlet serializes enums as their numeric value. Use the EnumsAsStrings parameter to serialize as the string representation.",
             "type": "string"
           }
         ]
@@ -81,20 +105,40 @@
     },
     "LogChannels": {
       "type": "string",
-      "description": "Specifies logging channels for non-Windows platforms."
+      "description": "Specifies the logging channels to enable for non-Windows platforms. Separate the values with a comma when specifying more than one. The default value is 'Operational'.",
+      "default": "Operational",
+      "enum": [
+        "Operational",
+        "Analytic",
+        "Operational,Analytic"
+      ]
     },
     "LogIdentity": {
       "type": "string",
-      "description": "Specifies the log identity for non-Windows platforms."
+      "description": "Specifies the log identity name to use for non-Windows platforms. This value can be used to tell the difference between two instances of a PowerShell installation, such as a release and beta version. This value is also used to redirect log output to a separate file. The default identity is 'powershell'.",
+      "default": "powershell"
     },
     "LogKeywords": {
       "type": "string",
-      "description": "Specifies logging keywords for non-Windows platforms."
+      "description": "Specifies logging keywords for non-Windows platforms. Keywords provide the ability to limit logging to specific components within PowerShell. By default, all keywords are enabled and changing this value is only useful for specialized troubleshooting.",
+      "enum": [
+        "Runspace",
+        "Pipeline",
+        "Protocol",
+        "Transport",
+        "Host",
+        "Cmdlets",
+        "Serializer",
+        "Session",
+        "ManagedPlugin"
+      ]
     },
     "LogLevel": {
       "type": "string",
-      "description": "Specifies the logging level for non-Windows platforms.",
+      "description": "Specifies the logging level for non-Windows platforms. The value you choose enables itself and all the values before it. The default value is Informational.",
+      "default": "Informational",
       "enum": [
+        "Always",
         "Critical",
         "Error",
         "Warning",
@@ -105,8 +149,93 @@
     },
     "Microsoft.PowerShell:ExecutionPolicy": {
       "$comment": "Windows-only. See https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.5#executionpolicy",
+      "description": "Configures the execution policy for PowerShell sessions on Windows, determining what scripts can be run. By default, PowerShell uses the existing execution policy.",
+      "$ref": "#/definitions/ExecutionPolicies"
+    },
+    "PSModulePath": {
       "type": "string",
-      "description": "Configures the execution policy for PowerShell sessions, determining what scripts can be run. By default, PowerShell uses the existing execution policy.",
+      "description": "Overrides the PSModulePath settings for this PowerShell session. Using the '/' separator will work with all three OS environments. Supports environment variables enclosed in '%'.",
+      "default": "%HOME%/Documents/PowerShell/Modules"
+    },
+    "PowerShellPolicies": {
+      "$comment": "Windows-only. See https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.5#powershellpolicies",
+      "type": "object",
+      "description": "Contains settings that mirror the Group Policy settings for PowerShell (Windows-only).",
+      "additionalProperties": false,
+      "properties": {
+        "ExecutionPolicy": {
+          "description": "Configures the execution policy for PowerShell sessions, determining what scripts can be run. By default, PowerShell uses the existing execution policy.",
+          "$ref": "#/definitions/ExecutionPolicies",
+          "additionalProperties": false
+        },
+        "ConsoleSessionConfiguration": {
+          "description": "Specifies the session configuration for all PowerShell sessions.",
+          "$ref": "#/definitions/ConsoleSessionConfiguration"
+        },
+        "ModuleLogging": {
+          "description": "Controls logging for PowerShell modules.",
+          "$ref": "#/definitions/ModuleLogging"
+        },
+        "ProtectedEventLogging": {
+          "description": "Configures Protected Event Logging.",
+          "$ref": "#/definitions/ProtectedEventLogging"
+        },
+        "ScriptBlockLogging": {
+          "description": "Controls logging of PowerShell script blocks.",
+          "$ref": "#/definitions/ScriptBlockLogging"
+        },
+        "ScriptExecution": {
+          "type": "object",
+          "description": "Sets the execution policy for scripts. Takes precedence over the ExecutionPolicy setting.",
+          "properties": {
+            "ExecutionPolicy": {
+              "$ref": "#/definitions/ExecutionPolicies",
+              "description": "Specifies the execution policy for scripts."
+            }
+          },
+          "required": [
+            "ExecutionPolicy"
+          ],
+          "additionalProperties": false
+        },
+        "Transcription": {
+          "description": "Configures transcription settings.",
+          "$ref": "#/definitions/Transcription"
+        },
+        "UpdatableHelp": {
+          "description": "Configures the default source path for Updatable Help.",
+          "$ref": "#/definitions/UpdatableHelp"
+        }
+      }
+    },
+    "ConsoleSessionConfiguration": {
+      "description": "Specifies the session configuration to be used for all PowerShell sessions.",
+      "$ref": "#/definitions/ConsoleSessionConfiguration"
+    },
+    "ModuleLogging": {
+      "description": "Controls logging for PowerShell modules.",
+      "$ref": "#/definitions/ModuleLogging"
+    },
+    "ProtectedEventLogging": {
+      "description": "Configures Protected Event Logging.",
+      "$ref": "#/definitions/ProtectedEventLogging"
+    },
+    "ScriptBlockLogging": {
+      "description": "Controls logging of PowerShell script blocks.",
+      "$ref": "#/definitions/ScriptBlockLogging"
+    },
+    "Transcription": {
+      "description": "Configures transcription settings.",
+      "$ref": "#/definitions/Transcription"
+    },
+    "UpdatableHelp": {
+      "description": "Configures the default source path for Updatable Help.",
+      "$ref": "#/definitions/UpdatableHelp"
+    }
+  },
+  "definitions": {
+    "ExecutionPolicies": {
+      "type": "string",
       "oneOf": [
         {
           "title": "Restricted",
@@ -152,189 +281,8 @@
         }
       ]
     },
-    "PSModulePath": {
-      "type": "string",
-      "description": "Overrides the PSModulePath settings for this PowerShell session. Supports environment variables enclosed in '%'."
-    },
-    "PowerShellPolicies": {
-      "$comment": "Windows-only. See https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.5#powershellpolicies",
-      "type": "object",
-      "description": "Contains settings that mirror the Group Policy settings for PowerShell.",
-      "additionalProperties": false,
-      "properties": {
-        "ExecutionPolicy": {
-          "type": "object",
-          "description": "Configures the execution policy for PowerShell sessions, determining what scripts can be run. By default, PowerShell uses the existing execution policy.",
-          "properties": {
-            "ExecutionPolicy": {
-              "type": "string",
-              "enum": [
-                "Restricted",
-                "AllSigned",
-                "RemoteSigned",
-                "Unrestricted",
-                "Bypass",
-                "Undefined"
-              ],
-              "description": "Specifies the execution policy."
-            }
-          },
-          "required": [
-            "ExecutionPolicy"
-          ],
-          "additionalProperties": false
-        },
-        "ConsoleSessionConfiguration": {
-          "type": "object",
-          "description": "Specifies the session configuration for all PowerShell sessions.",
-          "properties": {
-            "EnableConsoleSessionConfiguration": {
-              "type": "boolean",
-              "description": "Enables session configurations when set to true."
-            },
-            "ConsoleSessionConfigurationName": {
-              "type": [
-                "string",
-                "array"
-              ],
-              "description": "Specifies the name(s) of the configuration endpoint(s).",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          "required": [
-            "EnableConsoleSessionConfiguration",
-            "ConsoleSessionConfigurationName"
-          ],
-          "additionalProperties": false
-        },
-        "ModuleLogging": {
-          "type": "object",
-          "description": "Controls logging for PowerShell modules.",
-          "properties": {
-            "EnableModuleLogging": {
-              "type": "boolean",
-              "description": "Enables module logging when set to true."
-            },
-            "ModuleNames": {
-              "type": "array",
-              "description": "Specifies the names of modules to log.",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          "required": [
-            "EnableModuleLogging",
-            "ModuleNames"
-          ],
-          "additionalProperties": false
-        },
-        "ProtectedEventLogging": {
-          "type": "object",
-          "description": "Configures Protected Event Logging.",
-          "properties": {
-            "EnableProtectedEventLogging": {
-              "type": "boolean",
-              "description": "Enables Protected Event Logging when set to true."
-            },
-            "EncryptionCertificate": {
-              "type": "array",
-              "description": "List of certificates used for encryption.",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          "required": [
-            "EnableProtectedEventLogging",
-            "EncryptionCertificate"
-          ],
-          "additionalProperties": false
-        },
-        "ScriptBlockLogging": {
-          "type": "object",
-          "description": "Controls logging of PowerShell script blocks.",
-          "properties": {
-            "EnableScriptBlockLogging": {
-              "type": "boolean",
-              "description": "Enables logging of all PowerShell script input when set to true."
-            },
-            "EnableScriptBlockInvocationLogging": {
-              "type": "boolean",
-              "description": "Enables logging of script block start and stop events when set to true."
-            }
-          },
-          "required": [
-            "EnableScriptBlockLogging",
-            "EnableScriptBlockInvocationLogging"
-          ],
-          "additionalProperties": false
-        },
-        "ScriptExecution": {
-          "type": "object",
-          "description": "Sets the execution policy for scripts. Takes precedence over the Microsoft.PowerShell:ExecutionPolicy setting.",
-          "properties": {
-            "ExecutionPolicy": {
-              "type": "string",
-              "enum": [
-                "Restricted",
-                "AllSigned",
-                "RemoteSigned",
-                "Unrestricted",
-                "Bypass",
-                "Undefined"
-              ],
-              "description": "Specifies the execution policy."
-            }
-          },
-          "required": [
-            "ExecutionPolicy"
-          ],
-          "additionalProperties": false
-        },
-        "Transcription": {
-          "type": "object",
-          "description": "Configures transcription settings.",
-          "properties": {
-            "EnableTranscripting": {
-              "type": "boolean",
-              "description": "Enables transcription for all PowerShell sessions when set to true."
-            },
-            "EnableInvocationHeader": {
-              "type": "boolean",
-              "description": "Includes a header at the top of the transcription log file when set to true."
-            },
-            "OutputDirectory": {
-              "type": "string",
-              "description": "Specifies the directory to collect transcription log files."
-            }
-          },
-          "required": [
-            "EnableTranscripting"
-          ],
-          "additionalProperties": false
-        },
-        "UpdatableHelp": {
-          "type": "object",
-          "description": "Configures the default source path for Updatable Help.",
-          "properties": {
-            "DefaultSourcePath": {
-              "type": "string",
-              "description": "Sets the default value of the SourcePath parameter on the Update-Help cmdlet."
-            }
-          },
-          "required": [
-            "DefaultSourcePath"
-          ],
-          "additionalProperties": false
-        }
-      }
-    },
     "ConsoleSessionConfiguration": {
       "type": "object",
-      "description": "Specifies the session configuration to be used for all PowerShell sessions.",
       "properties": {
         "EnableConsoleSessionConfiguration": {
           "type": "boolean",
@@ -359,7 +307,6 @@
     },
     "ModuleLogging": {
       "type": "object",
-      "description": "Controls logging for PowerShell modules.",
       "properties": {
         "EnableModuleLogging": {
           "type": "boolean",
@@ -381,7 +328,6 @@
     },
     "ProtectedEventLogging": {
       "type": "object",
-      "description": "Configures Protected Event Logging.",
       "properties": {
         "EnableProtectedEventLogging": {
           "type": "boolean",
@@ -403,7 +349,6 @@
     },
     "ScriptBlockLogging": {
       "type": "object",
-      "description": "Controls logging of PowerShell script blocks.",
       "properties": {
         "EnableScriptBlockLogging": {
           "type": "boolean",
@@ -422,7 +367,6 @@
     },
     "Transcription": {
       "type": "object",
-      "description": "Configures transcription settings.",
       "properties": {
         "EnableTranscripting": {
           "type": "boolean",
@@ -444,7 +388,6 @@
     },
     "UpdatableHelp": {
       "type": "object",
-      "description": "Configures the default source path for Updatable Help.",
       "properties": {
         "DefaultSourcePath": {
           "type": "string",
