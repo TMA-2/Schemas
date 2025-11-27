@@ -1,0 +1,27 @@
+MD013:          # line-length
+  line_length: 200
+  code_blocks: true
+  code_block_line_length: 120
+  headings: true
+  heading_line_length: 80
+  tables: false
+  stern: false
+  strict: false
+MD022:          # blanks-around-headings
+  lines_above: 1
+  lines_below: 0
+MD024:          # no-duplicate-heading
+  siblings_only: true
+MD029:
+  style: one_or_ordered
+MD031: false    # blanks-around-fences
+MD032: false    # blanks-around-lists
+MD033:          # no-inline-html
+    allowed_elements:
+      - br
+      - hr
+      - p
+MD034: false    # no-bare-urls
+MD036: false    # no-emphasis-as-heading
+MD058: false    # blanks-around-tables
+MD059: false    # descriptive-link-text
