@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://json.schemastore.org/powershell.config",
-  "$comment": "Refer to https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.5.",
+  "$id": "https://raw.githubusercontent.com/TMA-2/Schemas/refs/heads/main/powershell.config.schema.json",
+  "$comment": "Refer to https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_config?view=powershell-7.5",
   "title": "PowerShell Configuration JSON Schema",
   "description": "Schema for the powershell.config.json file using documented configuration settings for PowerShell Version 7.5.\n\nWarning: Unrecognized keys or invalid values in the configuration file are ignored. If the powershell.config.json file contains invalid JSON, PowerShell can't start an interactive session. If this occurs, you must fix the configuration file.",
   "type": "object",
@@ -44,6 +44,7 @@
       "description": "Names of experimental features to enable in PowerShell. See https://learn.microsoft.com/en-us/powershell/scripting/learn/experimental-features?view=powershell-7.5 for more information about experimental features in PowerShell.",
       "type": "array",
       "uniqueItems": true,
+      "additionalItems": true,
       "minItems": 0,
       "default": [],
       "items": {
@@ -73,6 +74,12 @@
             "title": "PSLoadAssemblyFromNativeCode",
             "const": "PSLoadAssemblyFromNativeCode",
             "description": "Exposes an API to allow assembly loading from native code."
+          },
+          {
+            "title": "PSFeedbackProvider",
+            "const": "PSFeedbackProvider",
+            "description": "When you enable this feature, PowerShell uses a new feedback provider to give you feedback when a command can't be found. The feedback provider is extensible, and can be implemented by third-party modules. The feedback provider can be used by other subsystems, such as the predictor subsystem, to provide predictive IntelliSense results.",
+            "type": "string"
           },
           {
             "title": "PSModuleAutoLoadSkipOfflineFiles",

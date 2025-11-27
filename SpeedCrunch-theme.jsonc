@@ -1,0 +1,42 @@
+{
+    "$schema": "SpeedCrunchTheme.schema.json",
+    // The cursor color in the expression editor
+    // VSCode: editorCursor.foreground
+    "cursor": "#528BFF",
+    // The color for any number
+    // VSCode: support.constant.numeric
+    "number": "#91e5ff",
+    // Any parentheses. This role defines the text color, both for regular as well as for highlighted matching parentheses.
+    // VSCode: punctuation.definition.parameters
+    "parens": "#ffd700",
+    // The color for the result value in the history view
+    // VSCode: support.constant.numeric
+    "result": "#D19A66",
+    // The color for any comments
+    // VSCode: comment
+    "comment": "#5C6370",
+    // The background color for matching parentheses. When moving the cursor on a parenthesis, both it and its corresponding counterpart will be highlighted by changing their background to this color.
+    // VSCode: punctuation.section.embedded
+    "matched": "#91e5ff",
+    // The names of defined functions, built-in as well as user-defined.
+    // VSCode: entity.name.function
+    "function": "#56B6C2",
+    // The color for any operator
+    // VSCode: keyword.operator
+    "operator": "#C678DD",
+    // The color for the names of any variables or built-in constants
+    // VSCode: variable.other.constant
+    "variable": "#E06C75",
+    // The color of the history view's scrollbar
+    // VSCode: scrollbarSlider.background
+    "scrollbar": "#4E5666",
+    // Separators; notably, the semicolon (;) used for defining and using multi-argument functions.
+    // VSCode: punctuation.terminator
+    "separator": "#ABB2BF",
+    // The background color of the main history view
+    // VSCode: editor.background
+    "background": "#282C34",
+    // The background color of the expression editor
+    // VSCode: terminal.background
+    "editorbackground": "#282c34"
+}

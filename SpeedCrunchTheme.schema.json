@@ -1,0 +1,83 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "SpeedCrunchTheme.schema.json",
+    "$comment": "This JSON file is a schema for defining a theme for the SpeedCrunch calculator. The theme is used to define the colors of various elements in the expression editor and history view. See more info at https://heldercorreia.bitbucket.io/speedcrunch/advanced/colorschemeformat.html",
+    "title": "SpeedCrunch Theme",
+    "type": "object",
+    "propertyNames": {
+        "required": ["cursor", "number", "parens", "result", "comment", "matched", "function", "operator", "variable", "scrollbar", "separator", "background", "editorbackground"]
+    },
+    "properties": {
+        "cursor": {
+            "$ref": "#/definitions/colorHex",
+            "default": "#FF6464",
+            "description": "The cursor color in the expression editor"
+        },
+        "number": {
+            "$ref": "#/definitions/colorHex",
+            "default": "#282828",
+            "description": "The color for any number"
+        },
+        "parens": {
+            "$ref": "#/definitions/colorHex",
+            "default": "#FFA032",
+            "description": "Any parentheses. This role defines the text color, both for regular as well as for highlighted matching parentheses."
+        },
+        "result": {
+            "$ref": "#/definitions/colorHex",
+            "default": "#0064C8",
+            "description": "The color for the result value in the history view"
+        },
+        "comment": {
+            "$ref": "#/definitions/colorHex",
+            "default": "#707070",
+            "description": "The color for any comments"
+        },
+        "matched": {
+            "$ref": "#/definitions/colorHex",
+            "default": "#64507B",
+            "description": "The background color for matching parentheses. When moving the cursor on a parenthesis, both it and its corresponding counterpart will be highlighted by changing their background to this color."
+        },
+        "function": {
+            "$ref": "#/definitions/colorHex",
+            "default": "#4A9A07",
+            "description": "The names of defined functions, built-in as well as user-defined."
+        },
+        "operator": {
+            "$ref": "#/definitions/colorHex",
+            "default": "#969696",
+            "description": "The color for any operator"
+        },
+        "variable": {
+            "$ref": "#/definitions/colorHex",
+            "default": "#EF2928",
+            "description": "The color for the names of any variables or built-in constants"
+        },
+        "scrollbar": {
+            "$ref": "#/definitions/colorHex",
+            "default": "#FF7832",
+            "description": "The color of the history view's scrollbar"
+        },
+        "separator": {
+            "$ref": "#/definitions/colorHex",
+            "default": "#64507B",
+            "description": "Separators; notably, the semicolon (;) used for defining and using multi-argument functions."
+        },
+        "background": {
+            "$ref": "#/definitions/colorHex",
+            "default": "#FFFFFF",
+            "description": "The background color of the main history view"
+        },
+        "editorbackground": {
+            "$ref": "#/definitions/colorHex",
+            "default": "#DCDCDC",
+            "description": "The background color of the expression editor"
+        }
+    },
+    "definitions": {
+        "colorHex": {
+            "type": "string",
+            "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+        }
+    }
+}
