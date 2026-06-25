@@ -41,7 +41,7 @@
       }
     },
     "ExperimentalFeatures": {
-      "description": "Names of experimental features to enable in PowerShell. See https://learn.microsoft.com/en-us/powershell/scripting/learn/experimental-features?view=powershell-7.5 for more information about experimental features in PowerShell.",
+      "description": "Names of experimental features to enable in PowerShell. See https://learn.microsoft.com/en-us/powershell/scripting/learn/experimental-features?view=powershell-7.6 or https://github.com/MicrosoftDocs/PowerShell-Docs/blob/main/reference/docs-conceptual/learn/experimental-features.md for more information about experimental features in PowerShell.",
       "type": "array",
       "uniqueItems": true,
       "additionalItems": true,
