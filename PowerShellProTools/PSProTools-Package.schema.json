@@ -1,0 +1,465 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Schema for PowerShell Pro Tools Packager.json",
+  "$comment": "This schema defines the structure for a JSON-format PowerShell Pro Tools packager configuration. It includes properties for the root script, output path, packaging options, and bundling settings. See https://docs.poshtools.com/powershell-pro-tools-documentation/packaging/package.psd1#config-file-schema for more details on the original psd1 format.",
+  "title": "PowerShell Pro Tools Packager",
+  "type": "object",
+  "required": [
+    "Root",
+    "OutputPath"
+  ],
+  "properties": {
+    "Root": {
+      "type": "string",
+      "description": "Root script to package. This is the main entry point for the package."
+    },
+    "OutputPath": {
+      "type": "string",
+      "description": "The output directory for the resulting executable."
+    },
+    "Package": {
+      "type": "object",
+      "description": "Configuration for the packager.",
+      "properties": {
+        "Enabled": {
+          "type": "boolean",
+          "description": "Whether the packager is enabled."
+        },
+        "Obfuscate": {
+          "type": "boolean",
+          "description": "Whether to obfuscate the assembly. Only valid when PowerShellVersion = Windows PowerShell.",
+          "if": {
+            "properties": {
+              "PowerShellVersion": {
+                "const": "Windows PowerShell"
+              }
+            }
+          },
+          "then": {
+            "enum": [true, false]
+          },
+          "else": {
+            "const": false
+          }
+        },
+        "HideConsoleWindow": {
+          "type": "boolean",
+          "description": "Whether to hide the console window. Only valid for console applications. Useful for packaging form applications."
+        },
+        "FileDescription": {
+          "type": "string",
+          "description": "The file description to display in the assembly properties."
+        },
+        "FileVersion": {
+          "type": "string",
+          "description": "The file version to display in the assembly properties."
+        },
+        "ProductName": {
+          "type": "string",
+          "description": "The product name to display in the assembly properties."
+        },
+        "ProductVersion": {
+          "type": "string",
+          "description": "The product version to display in the assembly properties."
+        },
+        "Copyright": {
+          "type": "string",
+          "description": "The copyright to display in the assembly properties."
+        },
+        "RequireElevation": {
+          "type": "boolean",
+          "description": "Whether the executable requires elevation to run. This setting is only supported on Windows.",
+          "if": {
+            "properties": {
+              "RuntimeIdentifier": {
+                "pattern": "^win"
+              }
+            }
+          },
+          "then": {
+            "type": "boolean"
+          },
+          "else": {
+            "not": {}
+          }
+        },
+        "ApplicationIconPath": {
+          "type": "string",
+          "description": "The path to the icon to display for this application."
+        },
+        "PackageType": {
+          "type": "string",
+          "enum": ["Console", "Service", "Windows"],
+          "description": "Type of package to create. Accepted values are Console, Service, or Windows."
+        },
+        "DisableQuickEdit": {
+          "type": "boolean",
+          "description": "Disables the quick edit mode on Windows console applications.",
+          "if": {
+            "properties": {
+              "PackageType": {
+                "const": "Console"
+              }
+            }
+          },
+          "then": {
+            "type": "boolean"
+          },
+          "else": {
+            "not": {}
+          }
+        },
+        "ServiceName": {
+          "type": "string",
+          "description": "The name of the service when packaging a service.",
+          "if": {
+            "properties": {
+              "PackageType": {
+                "const": "Service"
+              }
+            }
+          },
+          "then": {
+            "type": "string"
+          },
+          "else": {
+            "not": {}
+          }
+        },
+        "ServiceDisplayName": {
+          "type": "string",
+          "description": "The display name of the service when packaging a service.",
+          "if": {
+            "properties": {
+              "PackageType": {
+                "const": "Service"
+              }
+            }
+          },
+          "then": {
+            "type": "string"
+          },
+          "else": {
+            "not": {}
+          }
+        },
+        "PowerShellVersion": {
+          "type": "string",
+          "title": "PowerShell Version",
+          "description": "The PowerShell version to target. Ensure that you specify a supported DotNetVersion when selecting your PowerShell version.",
+          "examples": [
+            "Windows PowerShell", "7.0.6", "7.1.5", "7.2.24", "7.3.11", "7.4.7", "7.5.0"
+          ],
+          "pattern": "^(Windows PowerShell|7\\.[0-5]\\.\\d+)$",
+          "oneOf": [
+            {
+              "if": {
+                "properties": {
+                  "DotNetVersion": {
+                    "oneOf": [
+                      {"const": "net462"},
+                      {"const": "net470"},
+                      {"const": "net471"},
+                      {"const": "net472"},
+                      {"const": "net480"},
+                      {"const": "net481"}
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "const": "Windows PowerShell"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "DotNetVersion": {
+                    "const": "netcoreapp31"
+                  }
+                }
+              },
+              "then": {
+                "default": "7.0.6",
+                "pattern": "^7\\.0\\.\\d+$"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "DotNetVersion": {
+                    "const": "net50"
+                  }
+                }
+              },
+              "then": {
+                "default": "7.1.5",
+                "pattern": "^7\\.1\\.\\d+$"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "DotNetVersion": {
+                    "const": "net60"
+                  }
+                }
+              },
+              "then": {
+                "default": "7.2.24",
+                "pattern": "^7\\.2\\.\\d+$"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "DotNetVersion": {
+                    "const": "net70"
+                  }
+                }
+              },
+              "then": {
+                "default": "7.3.11",
+                "pattern": "^7\\.3\\.\\d+$"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "DotNetVersion": {
+                    "pattern": "^net8[01]$"
+                  }
+                }
+              },
+              "then": {
+                "default": "7.4.7",
+                "pattern": "^7\\.4\\.\\d+$"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "DotNetVersion": {
+                    "const": "net90"
+                  }
+                }
+              },
+              "then": {
+                "default": "7.5.0",
+                "pattern": "^7\\.5\\.\\d+$"
+              }
+            }
+          ]
+        },
+        "DotNetVersion": {
+          "type": "string",
+          "description": "The .NET version to target for the executable. This must be compatible with PowerShellVersion.",
+          "enum": ["net462", "net470", "net471", "net472", "net480", "net481", "netcoreapp31", "net50", "net60", "net70", "net80", "net81", "net90"],
+          "oneOf": [
+            {
+              "if": {
+                "properties": {
+                  "PowerShellVersion": {
+                    "const": "Windows PowerShell"
+                  }
+                }
+              },
+              "then": {
+                "enum": ["net462", "net470", "net471", "net472", "net480", "net481"]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "PowerShellVersion": {
+                    "pattern": "^7\\.0\\.\\d+$"
+                  }
+                }
+              },
+              "then": {
+                "const": "netcoreapp31"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "PowerShellVersion": {
+                    "pattern": "^7\\.1\\.\\d+$"
+                  }
+                }
+              },
+              "then": {
+                "const": "net50"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "PowerShellVersion": {
+                    "pattern": "^7\\.2\\.\\d+$"
+                  }
+                }
+              },
+              "then": {
+                "const": "net60"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "PowerShellVersion": {
+                    "pattern": "^7\\.3\\.\\d+$"
+                  }
+                }
+              },
+              "then": {
+                "const": "net70"
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "PowerShellVersion": {
+                    "pattern": "^7\\.4\\.\\d+$"
+                  }
+                }
+              },
+              "then": {
+                "enum": ["net80", "net81"]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "PowerShellVersion": {
+                    "pattern": "^7\\.5\\.\\d+$"
+                  }
+                }
+              },
+              "then": {
+                "const": "net90"
+              }
+            }
+          ]
+        },
+        "DotNetSdk": {
+          "type": "string",
+          "description": "This is an advanced option. The target .NET SDK to use when packaging the executable. If not specified, the highest version will be used."
+        },
+        "HighDPISupport": {
+          "type": "boolean",
+          "description": "Enable high DPI support for Windows Forms applications."
+        },
+        "PowerShellArguments": {
+          "type": "string",
+          "pattern": "(?!-Command)",
+          "description": "Additional arguments to provide to the PowerShell process. This can include arguments like -ExecutionPolicy or -NoProfile. It must not include -Command."
+        },
+        "Host": {
+          "type": "string",
+          "title": "PowerShell Host",
+          "description": "Specifies the PowerShell host to use. The Default host will use the .NET SDK to create and package a script executable. The Ironman Software hosts do not function this way. You can read more about Ironman Software hosts at https://docs.poshtools.com/powershell-pro-tools-documentation/packaging/package-hosts",
+          "default": "Default",
+          "oneOf": [
+            {
+              "const": "Default",
+              "description": "The default host uses the .NET SDK to compile an executable that runs your PowerShell script. The default host currently provides more options than the other hosts but is often flagged as suspicious by anti-virus applications. It also requires the .NET SDK installed on the local machine in order to function."
+            },
+            {
+              "const": "IronmanPowerShellHost",
+              "description": "The Ironman Software host is a precompiled executable that is updated to include your script and settings. It does not require the .NET SDK and is less likely to be flagged by antivirus. The standard host will not hide the console window."
+            },
+            {
+              "const": "IronmanPowerShellWinFormsHost",
+              "description": "The Ironman Software host is a precompiled executable that is updated to include your script and settings. It does not require the .NET SDK and is less likely to be flagged by antivirus. The Win Forms host will hide the console window."
+            },
+            {
+              "const": "PowerShell727",
+              "description": "PowerShell 7.2.7 for Windows. Includes PowerShell runtime."
+            },
+            {
+              "const": "PowerShell727Lightweight",
+              "description": "PowerShell 7.2.7 for Windows. Does not include the PowerShell runtime. PowerShell 7.2.7 or later needs to be installed on the target machine."
+            },
+            {
+              "const": "PowerShell727Winforms",
+              "description": "PowerShell 7.2.7 Windows host with Windows Forms support. Includes PowerShell runtime."
+            },
+            {
+              "const": "PowerShell727WinformsLightweight",
+              "description": "PowerShell 7.2.7 Windows host with Windows Forms support. Does not include the PowerShell runtime. PowerShell 7.2.7 or later needs to be installed on the target machine."
+            }
+          ]
+        },
+        "OutputName": {
+          "type": "string",
+          "description": "The name of the output assembly. When this is not specified, this will be the root script name."
+        },
+        "Lightweight": {
+          "type": "boolean",
+          "description": "Removes WinForms and WPF support from .NET 7/PowerShell 7 executables. This reduces the overall footprint of the executable by about 45%."
+        },
+        "Resources": {
+          "type": "array",
+          "description": "An array of resources as absolute or relative paths to include with the executable. These resources will be stored embedded.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Certificate": {
+          "type": "string",
+          "description": "The certificate used to sign the assembly. The packager will use Set-AuthenticodeSignature to sign the assembly. This should be the path to a valid code signing certificate.",
+          "pattern": "^cert:\\\\.+",
+          "examples": [
+            "Cert:\\CurrentUser\\AuthRoot\\02FAF3E291435468607857694DF5E45B68851555"
+          ]
+        },
+        "RuntimeIdentifier": {
+          "type": "string",
+          "description": "The .NET runtime identifier to target. This defaults to win-x64. If you wish to target Linux, you could specify linux-x64. You can find a list of valid .NET runtime identifiers at https://learn.microsoft.com/en-us/dotnet/core/rid-catalog#known-rids",
+          "default": "win-x64",
+          "examples": [
+            "win-x64",
+            "win-x86",
+            "win-arm64",
+            "linux-x64",
+            "linux-arm64",
+            "osx-x64",
+            "osx-arm64"
+          ],
+          "pattern": "^(win|linux|osx)-(x86|x64|arm64)$"
+        },
+        "Platform": {
+          "type": "string",
+          "description": "The target architecture for the executable.",
+          "enum": ["x86", "x64"]
+        }
+      }
+    },
+    "Bundle": {
+      "type": "object",
+      "description": "Configuration for bundling scripts and modules into the executable.",
+      "properties": {
+        "Enabled": {
+          "type": "boolean",
+          "description": "Bundling will include referenced scripts and modules in the resulting executable."
+        },
+        "Modules": {
+          "type": "boolean",
+          "description": "Whether to bundle modules with the script executable. Modules will only be bundled when imported with Import-Module."
+        },
+        "NestedModules": {
+          "type": "boolean",
+          "description": "Whether to include nested modules of packaged modules. Requires Modules = true."
+        },
+        "IgnoredModules": {
+          "type": "array",
+          "description": "An array of modules to ignore during packaging.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

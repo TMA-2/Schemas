@@ -1,0 +1,39 @@
+{
+  "$schema": "./PSProTools-Package.schema.json",
+  "OutputPath": "bin\\debug",
+  "Root": "Script.ps1",
+  "Package": {
+    "DotNetVersion": "net481",
+    "PowerShellVersion": "Windows PowerShell",
+    "DotNetSdk": "",
+    "Copyright": "(c) 2025",
+    "Enabled": true,
+    "FileVersion": "0.1.0",
+    "RequireElevation": false,
+    "HighDPISupport": true,
+    "ServiceName": "MyService",
+    "HideConsoleWindow": true,
+    "Obfuscate": true,
+    "OutputName": "My Script",
+    "Lightweight": false,
+    "Resources": ["Resources.resx","Icon.ico"],
+    "ApplicationIconPath": "Resources\\Icon.ico",
+    "PackageType": "Windows",
+    "PowerShellArguments": "-NoProfile -ExecutionPolicy Bypass",
+    "ProductVersion": "0.1.0",
+    "FileDescription": "My Script",
+    "Host": "IronmanPowerShellHost",
+    "ServiceDisplayName": "My Service",
+    "DisableQuickEdit": false,
+    "Certificate": "",
+    "RuntimeIdentifier": "win-x64",
+    "ProductName": "My Script",
+    "Platform": "x64"
+  },
+  "Bundle": {
+    "Enabled": true,
+    "Modules": false,
+    "NestedModules": true,
+    "IgnoredModules": []
+  }
+}
