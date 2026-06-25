@@ -97,7 +97,11 @@
     },
     "PSAlignAssignmentStatement": {
       "Enable": false,
-      "CheckHashtable": false
+      "CheckHashtable": false,
+      "AlignHashtableKvpWithInterveningComment": true,
+      "CheckEnum": true,
+      "AlignEnumMemberWithInterveningComment": true,
+      "IncludeValuelessEnumMembers": true
     },
     "PSAvoidLongLines": {
       "Enable": false,

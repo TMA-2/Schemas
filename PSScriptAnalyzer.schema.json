@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "PSScriptAnalyzerSettings.schema.json",
+  "$id": "https://raw.githubusercontent.com/TMA-2/Schemas/refs/heads/main/PSScriptAnalyzer.schema.json",
   "$comment": "Refer to https://learn.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/rules/readme?view=ps-modules",
   "title": "PSScriptAnalyzer Configuration JSON Schema",
-  "description": "WIP schema for PSScriptAnalyzerSettings.json using built-in settings.",
+  "description": "Proposed schema for JSON implementation of PSScriptAnalyzerSettings.psd1 configuration file.\nCurrent as of 1.24.0.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -84,6 +84,7 @@
     },
     "Rules": {
       "$ref": "#/definitions/RuleConfig",
+      "title": "Rule Configuration",
       "description": "Configuration settings for individual rules."
     }
   },
@@ -136,7 +137,6 @@
     },
     "RuleConfig": {
       "type": "object",
-      "title": "Advanced Rule Configuration",
       "additionalProperties": {
         "type": "object",
         "title": "Custom User-Defined Rule",
@@ -147,7 +147,7 @@
         },
         "pattern": "^PS[A-Za-z]+",
         "patternProperties": {
-          "^[\\w-]+": {
+          "^[\\w-]+$": {
             "title": "A Custom Rule Setting",
             "description": "Configuration setting for the custom rule."
           }
@@ -680,7 +680,7 @@
           {
             "title": "Custom Rule",
             "description": "A custom PSScriptAnalyzer rule name. It should match the function name, e.g. 'Measure-MyCustomRule'.",
-            "pattern": "^(Measure-\\w+|PS\\w+)$",
+            "pattern": "^(Measure-|PS)[\\w*]+$",
             "not": {
               "enum": [
                 "PSAlignAssignmentStatement",

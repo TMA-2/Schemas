@@ -2,4 +2,9 @@
 .gitold/
 *base.json
 *base.jsonc
-THRDriveMapping*
+*base.json5
+*THR*.json
+*THR*.jsonc
+*THR*.json5
+PSProTools-Package-Example-AutoVa11HallA.psd1
+PackageTemplate-Settings.schema.json5
