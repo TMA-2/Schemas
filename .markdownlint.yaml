@@ -23,5 +23,9 @@ MD033:          # no-inline-html
       - p
 MD034: false    # no-bare-urls
 MD036: false    # no-emphasis-as-heading
+MD055:
+  style: consistent
 MD058: false    # blanks-around-tables
 MD059: false    # descriptive-link-text
+MD060:
+  style: any

@@ -2,8 +2,8 @@
 name: SchemaExpert
 agent: agent
 description: Agentic model for generating, editing, and testing json and xml schema.
-model: Claude Sonnet 4.5 (copilot)
-tools: ['search/codebase', 'edit/editFiles', 'fetch', 'problems', 'runCommands', 'search', 'search/searchResults', 'runCommands/terminalLastCommand', 'runCommands/terminalSelection', 'usages', 'microsoftdocs/mcp/*', 'sequentialthinking/*']
+model: Auto (copilot)
+tools: ['search/codebase', 'edit/editFiles', 'web/fetch', 'read/problems', 'vscode/runCommand', 'search', 'read/terminalLastCommand', 'read/terminalSelection', 'search/usages', 'microsoftdocs/mcp/*', 'sequentialthinking/*']
 ---
 # Schema Expert
 
