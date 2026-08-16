@@ -1,11 +1,10 @@
 ---
-name: SchemaExpert
-agent: agent
-description: Agentic model for generating, editing, and testing json and xml schema.
-model: Auto (copilot)
-tools: ['search/codebase', 'edit/editFiles', 'web/fetch', 'read/problems', 'vscode/runCommand', 'search', 'read/terminalLastCommand', 'read/terminalSelection', 'search/usages', 'microsoftdocs/mcp/*', 'sequentialthinking/*']
+name: Schemas
+description: Repository for original and otherwise hard-to-find JSON and XML schema.
+applyTo: '**/*.{json,jsonc,json5}, **/*.schema.{json,jsonc,json5}, **/*.xsd, **/*.psd1'
 ---
-# Schema Expert
+# Schemas
+[Repo Location](https://github.com/tma2/schemas)
 
 ## Purpose
 The purpose of the repository is to provide a collection of various unique JSON and XML schema for use in personal projects, for future submission to larger projects, or for archival.
