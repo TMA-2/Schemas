@@ -60,8 +60,7 @@
     "PSUseToExportFieldsInManifest",
     "PSUseUsingScopeModifierInNewRunspaces",
     "PSUseUTF8EncodingForHelpFile",
-    "PSCustomRule",
-    "Measure-CustomRule"
+    "Measure-*"
   ],
   "ExcludeRules": [
     "PSAlignAssignmentStatement",
@@ -75,8 +74,15 @@
     "PSUseCompatibleSyntax",
     "PSUseCompatibleTypes",
     "PSUseConsistentIndentation",
+    "PSUseConsistentParameterKind",
+    "PSUseConsistentParameterSetName",
     "PSUseConsistentWhitespace",
-    "PSUseCorrectCasing"
+    "PSUseConstrainedLanguageMode",
+    // Rules.PSUseConstrainedLanguageMode.IgnoreSignatures
+    // - `$false` (default): Automatically detect signatures. Signed scripts get selective checking, unsigned get full checking.
+    // - `$true`: Bypass signature detection. ALL scripts get full CLM checking regardless of signature status.
+    "PSUseCorrectCasing",
+    "PSUseSingleValueFromPipelineParameter"
   ],
   "Severity": [
     "Error",
@@ -97,10 +103,10 @@
     },
     "PSAlignAssignmentStatement": {
       "Enable": false,
-      "CheckHashtable": false,
+      "AlignEnumMemberWithInterveningComment": true,
       "AlignHashtableKvpWithInterveningComment": true,
       "CheckEnum": true,
-      "AlignEnumMemberWithInterveningComment": true,
+      "CheckHashtable": false,
       "IncludeValuelessEnumMembers": true
     },
     "PSAvoidLongLines": {

@@ -1,31 +1,72 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/TMA-2/Schemas/refs/heads/main/PSScriptAnalyzer.schema.json",
-  "$comment": "Refer to https://learn.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/rules/readme?view=ps-modules",
-  "title": "PSScriptAnalyzer Configuration JSON Schema",
-  "description": "Proposed schema for JSON implementation of PSScriptAnalyzerSettings.psd1 configuration file.\nCurrent as of 1.24.0.",
+  "$id": "https://raw.githubusercontent.com/TMA-2/Schemas/refs/heads/main/specter.schema.json",
+  "$comment": "Refer to https://github.com/rjmholt/Specter/tree/main#configuration",
+  "title": "Specter Configuration JSON Schema",
+  "description": "Proposed schema for JSON implementation of Specter configuration file.\nCurrent as of 0.0.1.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    //#region: Specter-specific settings
+    "BuiltinRulePreference": {
+      "type": "string",
+      "title": "(SPECTER-ONLY) Built-in Rule Preference",
+      "enum": [
+        "none",
+        "default",
+        "comprehensive"
+      ],
+      "description": "Which built-in rules to load. By default, all are included."
+    },
+    "RuleExecutionMode": {
+      "type": "string",
+      "title": "(SPECTER-ONLY) Rule Execution Mode",
+      "enum": [
+        "default",
+        "parallel",
+        "sequential"
+      ],
+      "description": "How rules are executed in the Specter engine."
+    },
+    "RulePaths": {
+      "title": "(SPECTER-ONLY) Additional Module Rule Path(s)",
+      "description": "Additional rule module paths",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ExternalRules": {
+      "title": "(SPECTER-ONLY) External Rule Policy",
+      "description": "External rule loading policy",
+      "type": "string",
+      "default": "explicit",
+      "enum": [
+        "explicit",
+        "disabled",
+        "unrestricted"
+      ]
+    },
+    //#endregion: Specter-specific settings
     "IncludeRules": {
-      "title": "Rules To Include",
-      "description": "The rules to apply during ScriptAnalyzer invocation.",
+      "title": "(PSSCRIPTANALYZER) Rules To Include",
+      "description": "The rules to apply during Specter invocation.",
       "$ref": "#/definitions/RuleDescriptions"
     },
     "ExcludeRules": {
-      "title": "Rules To Exclude",
-      "description": "The rules to exclude from ScriptAnalyzer invocation. Takes precedence over IncludeRules.",
+      "title": "(PSSCRIPTANALYZER) Rules To Exclude",
+      "description": "The rules to exclude from Specter invocation. Takes precedence over IncludeRules.",
       "$ref": "#/definitions/RuleDescriptions"
     },
     "IncludeDefaultRules": {
       "type": "boolean",
-      "title": "Include Default Rules",
-      "description": "Specifies whether to include the default set of rules during ScriptAnalyzer invocation.",
+      "title": "(PSSCRIPTANALYZER) Include Default Rules",
+      "description": "Specifies whether to include the default set of rules during Specter invocation.",
       "default": true
     },
     "CustomRulePath": {
-      "title": "Custom Rule Path(s)",
-      "description": "Specifies the file paths to custom rules to include during ScriptAnalyzer invocation. The paths should point either to a module's folder, which implicitly uses the module manifest, or to the module's psm1 script file. The module must export the custom rule functions using `Export-ModuleMember` for them to be available to PSScriptAnalyzer.",
+      "title": "(PSSCRIPTANALYZER) Custom Rule Path(s)",
+      "description": "Specifies the file paths to custom rules to include during Specter invocation. The paths should point either to a module's folder, which implicitly uses the module manifest, or to the module's psm1 script file. The module must export the custom rule functions using `Export-ModuleMember` for them to be available to Specter.",
       "default": [
         ".\\MyCustomRules"
       ],
@@ -47,7 +88,7 @@
     },
     "RecurseCustomRulePath": {
       "type": "boolean",
-      "title": "Recurse Custom Rule Path",
+      "title": "(PSSCRIPTANALYZER) Recurse Custom Rule Path",
       "description": "Specifies whether to recursively search for custom rules in the specified CustomRulePath directories.",
       "default": false
     },
@@ -92,7 +133,28 @@
     "RuleEnable": {
       "type": "boolean",
       "title": "Enable",
-      "description": "Enable or disable the rule during ScriptAnalyzer invocation."
+      "default": true,
+      "description": "Enable or disable the rule during Specter analyzer invocation."
+    },
+    "RuleExcludePaths": {
+      "type": "array",
+      "title": "Exclude Paths",
+      "default": [],
+      "description": "Glob patterns of paths to skip during Specter analyzer invocation.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "DefaultRuleConfig": {
+      "type": "object",
+      "properties": {
+        "Enabled": {
+          "$ref": "#/definitions/RuleEnable"
+        },
+        "ExcludePaths": {
+          "$ref": "#/definitions/RuleExcludePaths"
+        }
+      }
     },
     "CompatibilityVersions": {
       "type": "array",
@@ -137,14 +199,12 @@
     },
     "RuleConfig": {
       "type": "object",
+      "$ref": "#/definitions/DefaultRuleConfig",
       "additionalProperties": {
         "type": "object",
         "title": "Custom User-Defined Rule",
         "description": "The name of the rule to configure.",
         "minProperties": 1,
-        "default": {
-          "Enable": true
-        },
         "pattern": "^PS[A-Za-z]+",
         "patternProperties": {
           "^[\\w-]+$": {
@@ -158,10 +218,14 @@
           "additionalProperties": false,
           "title": "Align Assignment Statement",
           "description": "Line up assignment statements such that the assignment operator are aligned.",
+          "$ref": "#/definitions/DefaultRuleConfig",
           "properties": {
             "Enable": {
               "$ref": "#/definitions/RuleEnable",
               "default": false
+            },
+            "ExcludePaths": {
+              "$ref": "#/definitions/RuleExcludePaths"
             },
             "CheckHashtable": {
               "type": "boolean",

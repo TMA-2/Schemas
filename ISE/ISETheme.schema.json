@@ -1,0 +1,179 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ISE Color Theme",
+  "type": "object",
+  "properties": {
+    "Name": {
+      "type": "string",
+      "description": "The friendly display name of the color theme."
+    },
+    "FontName": {
+      "type": "string",
+      "default": "Consolas",
+      "description": "The font family used in both the editor and console panes."
+    },
+    "FontSize": {
+      "type": "integer",
+      "default": 12,
+      "minimum": 6,
+      "maximum": 32,
+      "description": "The font size in points."
+    },
+    "Colors": {
+      "type": "object",
+      "description": "The flat key-value pairs representing ISE pane colors and token highlighting colors.",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}$",
+        "description": "A standard 6-character hex color code (e.g. #012456)."
+      },
+      "properties": {
+        "ConsolePaneBackgroundColor": {
+          "type": "string"
+        },
+        "ConsolePaneTextBackgroundColor": {
+          "type": "string"
+        },
+        "ConsolePaneForegroundColor": {
+          "type": "string"
+        },
+        "ScriptPaneBackgroundColor": {
+          "type": "string"
+        },
+        "ScriptPaneForegroundColor": {
+          "type": "string"
+        },
+        "SelectedForegroundColor": {
+          "type": "string"
+        },
+        "SelectedBackgroundColor": {
+          "type": "string"
+        },
+        "TokenColors\\Attribute": {
+          "type": "string"
+        },
+        "TokenColors\\Command": {
+          "type": "string"
+        },
+        "TokenColors\\CommandArgument": {
+          "type": "string"
+        },
+        "TokenColors\\CommandParameter": {
+          "type": "string"
+        },
+        "TokenColors\\Comment": {
+          "type": "string"
+        },
+        "TokenColors\\GroupEnd": {
+          "type": "string"
+        },
+        "TokenColors\\GroupStart": {
+          "type": "string"
+        },
+        "TokenColors\\Keyword": {
+          "type": "string"
+        },
+        "TokenColors\\LineContinuation": {
+          "type": "string"
+        },
+        "TokenColors\\LoopLabel": {
+          "type": "string"
+        },
+        "TokenColors\\Member": {
+          "type": "string"
+        },
+        "TokenColors\\NewLine": {
+          "type": "string"
+        },
+        "TokenColors\\Number": {
+          "type": "string"
+        },
+        "TokenColors\\Operator": {
+          "type": "string"
+        },
+        "TokenColors\\Position": {
+          "type": "string"
+        },
+        "TokenColors\\StatementSeparator": {
+          "type": "string"
+        },
+        "TokenColors\\String": {
+          "type": "string"
+        },
+        "TokenColors\\Type": {
+          "type": "string"
+        },
+        "TokenColors\\Unknown": {
+          "type": "string"
+        },
+        "TokenColors\\Variable": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\Attribute": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\Command": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\CommandArgument": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\CommandParameter": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\Comment": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\GroupEnd": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\GroupStart": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\Keyword": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\LineContinuation": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\LoopLabel": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\Member": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\NewLine": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\Number": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\Operator": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\Position": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\StatementSeparator": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\String": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\Type": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\Unknown": {
+          "type": "string"
+        },
+        "ConsoleTokenColors\\Variable": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "Name",
+    "Colors"
+  ]
+}

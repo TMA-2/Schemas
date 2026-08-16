@@ -27,6 +27,34 @@ Rule,RuleName,Severity,Enabled,CommonName,Description,Configurable,CanBeDisabled
 AlignAssignmentStatement,PSAlignAssignmentStatement,Warning,No,Align assignment statement,Line up assignment statements such that the assignment operator are aligned.,Yes,Yes
 #>
 
+# actually update schema rule descriptions
+$PSScriptAnalyzerSchema = gc .\PSScriptAnalyzer.schema.json | ConvertFrom-Json -Depth 10
+
+foreach ($Rule in $AllRules) {
+    $RuleName = $Rule.RuleName
+    $RuleSeverity = $Rule.Severity
+
+    $SchemaRule = $PSScriptAnalyzerSchema.definitions.RuleDescriptions.items.anyOf.Where({ $_.const -eq $RuleName })
+    if (-not $SchemaRule) {
+        continue
+    }
+
+    $RuleIdx = $PSScriptAnalyzerSchema.definitions.RuleDescriptions.items.anyOf.IndexOf($SchemaRule[0])
+    $PSScriptAnalyzerSchema.definitions.RuleDescriptions.items.anyOf[$RuleIdx].description += "\nSeverity: $RuleSeverity"
+
+    wh "Updated IncludeRules.$RuleName with severity" -NoNewline
+
+    $SchemaConfig = $PSScriptAnalyzerSchema.definitions.RuleConfig.properties.$RuleName
+    if (-not $SchemaConfig) {
+        wh '.'
+        continue
+    }
+
+    $PSScriptAnalyzerSchema.definitions.RuleConfig.properties.$RuleName.description += "\nSeverity: $RuleSeverity"
+
+    wh ". Updated Rules.$RuleName with severity."
+}
+
 # RuleName,Title,Description,Settings
 $SchemaBase = @'
 "{0}": {

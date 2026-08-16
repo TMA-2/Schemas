@@ -27,8 +27,8 @@ $RuleNames | ForEach-Object {
     if ($RulesMap.ContainsKey($RuleName)) { continue }
 
     try {
-        $Description = $Xml.root.SelectSingleNode("data[@name='${RuleName}Description']")?.value
-        $CommonName = $Xml.root.SelectSingleNode("data[@name='${RuleName}CommonName']")?.value
+        $Description = $Xml.root.SelectSingleNode("data[@name='${RuleName}Description']").value
+        $CommonName = $Xml.root.SelectSingleNode("data[@name='${RuleName}CommonName']").value
         $RulesMap.Add($RuleName,
             [pscustomobject]@{
                 Name        = $RuleName

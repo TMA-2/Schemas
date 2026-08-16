@@ -16,6 +16,21 @@ Despite being clearly influenced by the Visual Studio snippet format, it definit
 A number of possible examples of elements and features it supports *might* be found in the snippets included with the [ISE Steroids module](https://www.powershellgallery.com/packages/ISESteroids/2.7.1.9/) under `/Snippets`.
 However, some of the features may be unique to the module, such as Requirements, Declarations, etc.
 
+The type `Microsoft.PowerShell.Host.ISE.ISESnippet` defines what fields are read and thus the schema. Defined in the `Microsoft.PowerShell.GPowerShell` assembly.
+
+#### Properties
+
+- DisplayTitle: Title displayed in the snippet dropdown
+- SchemaVersion: Schema version of the snippet
+- Description: A few lines describing the intent and usage of the snippet
+- Author: The author, which may be a person or organization
+- CodeFragment: Text that would be inserted into the editor by the snippet
+- FullDiskPath: Disk location of the snippet
+- IsDefault True if it's a hardcoded default snippet
+- IsTabSpecific: Whether the snippet was loaded via a command into the tab. False if it was loaded from the user folder on startup, or was a default snippet.
+- CaretOffsetFromStart: The number of chars the caret must be moved after this snippet is inserted. -1 indicates no movement, which leaves it at the end of the snippet.
+- Indent: True - indent the snippet based on the point of insertion. False - do not indent this snippet; insert as specified in the XML, unchanged.
+
 ### PropertyList-1.0.xsd
 An updated XSD schema for the *stupid* PList format which I honestly despise. Another thing I likely won't do anything with. (what is wrong with me?)
 

@@ -1,70 +1,31 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/TMA-2/Schemas/refs/heads/main/specter.schema.json",
-  "$comment": "Refer to https://github.com/rjmholt/Specter/tree/main#configuration",
-  "title": "Specter Configuration JSON Schema",
-  "description": "Proposed schema for JSON implementation of Specter configuration file.\nCurrent as of 0.0.1.",
+  "$id": "https://raw.githubusercontent.com/TMA-2/Schemas/refs/heads/main/PSScriptAnalyzer.schema.json",
+  "$comment": "Refer to https://learn.microsoft.com/en-us/powershell/utility-modules/psscriptanalyzer/rules/readme?view=ps-modules",
+  "title": "PSScriptAnalyzer Configuration JSON Schema",
+  "description": "Proposed schema for JSON implementation of PSScriptAnalyzerSettings.psd1 configuration file.\nCurrent as of 1.24.0.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    //#region: Specter-specific settings
-    "BuiltinRulePreference": {
-      "type": "string",
-      "enum": [
-        "none",
-        "default",
-        "comprehensive"
-      ],
-      "description": "Which built-in rules to load"
-    },
-    "RuleExecutionMode": {
-      "type": "string",
-      "enum": [
-        "default",
-        "parallel",
-        "sequential"
-      ],
-      "description": "How rules are executed"
-    },
-    "RulePaths": {
-      "title": "Additional Module Rule Path(s)",
-      "description": "Additional rule module paths",
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "ExternalRules": {
-      "title": "External Rule Policy",
-      "description": "External rule loading policy",
-      "type": "string",
-      "default": "explicit",
-      "enum": [
-        "explicit",
-        "disabled",
-        "unrestricted"
-      ]
-    },
-    //#endregion: Specter-specific settings
     "IncludeRules": {
       "title": "Rules To Include",
-      "description": "The rules to apply during Specter invocation.",
+      "description": "The rules to apply during ScriptAnalyzer invocation.",
       "$ref": "#/definitions/RuleDescriptions"
     },
     "ExcludeRules": {
       "title": "Rules To Exclude",
-      "description": "The rules to exclude from Specter invocation. Takes precedence over IncludeRules.",
+      "description": "The rules to exclude from ScriptAnalyzer invocation. Takes precedence over IncludeRules.",
       "$ref": "#/definitions/RuleDescriptions"
     },
     "IncludeDefaultRules": {
       "type": "boolean",
       "title": "Include Default Rules",
-      "description": "Specifies whether to include the default set of rules during Specter invocation.",
+      "description": "Specifies whether to include the default set of rules during ScriptAnalyzer invocation.",
       "default": true
     },
     "CustomRulePath": {
       "title": "Custom Rule Path(s)",
-      "description": "Specifies the file paths to custom rules to include during Specter invocation. The paths should point either to a module's folder, which implicitly uses the module manifest, or to the module's psm1 script file. The module must export the custom rule functions using `Export-ModuleMember` for them to be available to Specter.",
+      "description": "Specifies the file paths to custom rules to include during ScriptAnalyzer invocation. The paths should point either to a module's folder, which implicitly uses the module manifest, or to the module's psm1 script file. The module must export the custom rule functions using `Export-ModuleMember` for them to be available to PSScriptAnalyzer.",
       "default": [
         ".\\MyCustomRules"
       ],
@@ -131,30 +92,7 @@
     "RuleEnable": {
       "type": "boolean",
       "title": "Enable",
-      "default": true,
-      "description": "Enable or disable the rule during Specter analyzer invocation."
-    },
-    "RuleExcludePaths": {
-      "type": "array",
-      "title": "Exclude Paths",
-      "default": [],
-      "description": "Glob patterns of paths to skip during Specter analyzer invocation.",
-      "items": {
-        "type": "string"
-      }
-    },
-    "DefaultRuleConfig": {
-      "type": "object",
-      "title": "Default Rule Configuration",
-      "description": "Default configuration settings for all rules.",
-      "properties": {
-        "Enabled": {
-          "$ref": "#/definitions/RuleEnable"
-        },
-        "ExcludePaths": {
-          "$ref": "#/definitions/RuleExcludePaths"
-        }
-      }
+      "description": "Enable or disable the rule during ScriptAnalyzer invocation."
     },
     "CompatibilityVersions": {
       "type": "array",
@@ -205,7 +143,7 @@
         "description": "The name of the rule to configure.",
         "minProperties": 1,
         "default": {
-          "$ref": "#/definitions/DefaultRuleConfig"
+          "Enable": true
         },
         "pattern": "^PS[A-Za-z]+",
         "patternProperties": {
@@ -220,20 +158,40 @@
           "additionalProperties": false,
           "title": "Align Assignment Statement",
           "description": "Line up assignment statements such that the assignment operator are aligned.",
-          "$ref": "#/definitions/DefaultRuleConfig",
           "properties": {
             "Enable": {
               "$ref": "#/definitions/RuleEnable",
               "default": false
             },
-            "ExcludePaths": {
-              "$ref": "#/definitions/RuleExcludePaths"
-            },
             "CheckHashtable": {
               "type": "boolean",
               "title": "Check Hashtable",
-              "description": "Enforce alignment of assignment statements in a hashtable and in a DSC Configuration. There is only one switch for hashtable and DSC configuration because the property value pairs in a DSC configuration are parsed as key-value pairs of a hashtable.",
-              "default": false
+              "description": "This parameter controls whether ScriptAnalyzer checks assignment alignment in hashtables and Desired State Configuration (DSC) configurations. It accepts a boolean value. To disable this check, set this parameter to $false. The default value is $true.",
+              "default": true
+            },
+            "AlignHashtableKvpWithInterveningComment": {
+              "type": "boolean",
+              "title": "Align Hashtable Key-Value Pairs With Intervening Comment",
+              "description": "This parameter controls whether ScriptAnalyzer includes hashtable key-value pairs that contain an intervening comment when determining alignment. It accepts a boolean value. To exclude these lines, set this parameter to $false. The default value is $true.",
+              "default": true
+            },
+            "AlignEnumMemberWithInterveningComment": {
+              "type": "boolean",
+              "title": "Align Enum Member With Intervening Comment",
+              "description": "This parameter controls whether ScriptAnalyzer includes enum members that contain an intervening comment when determining alignment. It accepts a boolean value. To exclude these lines, set this parameter to $false. The default value is $true.",
+              "default": true
+            },
+            "CheckEnum": {
+              "type": "boolean",
+              "title": "Check Enum",
+              "description": "This parameter controls whether ScriptAnalyzer checks assignment alignment in enums. It accepts a boolean value. To disable this check, set this parameter to $false. The default value is $true.",
+              "default": true
+            },
+            "IncludeValuelessEnumMembers": {
+              "type": "boolean",
+              "title": "Include Valueless Enum Members",
+              "description": "This parameter controls whether ScriptAnalyzer includes enum members without explicitly assigned values when determining alignment. It accepts a boolean value. To exclude valueless members, set this parameter to $false. The default value is $true.",
+              "default": true
             }
           }
         },
@@ -676,8 +634,8 @@
         },
         "PSUseCorrectCasing": {
           "additionalProperties": false,
-          "title": "Use exact casing of cmdlet/function/parameter name",
-          "description": "For better readability and consistency, use consistent casing.",
+          "title": "Use exact casing for Type, Cmdlet, and Parameter names, and lowercase for keywords and operators",
+          "description": "This is a style/formatting rule. PowerShell is case insensitive wherever possible, so the casing of cmdlet names, parameters, keywords, and operators does not matter. This rule nonetheless ensures consistent casing for clarity and readability. Using lowercase keywords helps distinguish them from commands. Using lowercase operators helps distinguish them from parameters.",
           "properties": {
             "Enable": {
               "$ref": "#/definitions/RuleEnable",
@@ -686,19 +644,19 @@
             "CheckCommands": {
               "type": "boolean",
               "title": "Check Commands",
-              "description": "If true, require the case of all operators to be lowercase.",
+              "description": "This parameter controls whether ScriptAnalyzer checks that the casing of all command and parameter names matches their canonical casing. It accepts a boolean value. The default value is $true.",
               "default": true
             },
             "CheckOperator": {
               "type": "boolean",
               "title": "Check Operator",
-              "description": "If true, require the case of all commands to match their actual casing.",
+              "description": "This parameter controls whether ScriptAnalyzer checks that all operators are lowercase. For example, -eq, -ne, and -gt. It accepts a boolean value. The default value is $true.",
               "default": true
             },
             "CheckKeyword": {
               "type": "boolean",
               "title": "Check Keyword",
-              "description": "If true, require the case of all keywords to be lowercase.",
+              "description": "This parameter controls whether ScriptAnalyzer checks that all language keywords are lowercase. It accepts a boolean value. The default value is $true.",
               "default": true
             }
           }
@@ -1114,6 +1072,11 @@
             "description": "Each statement block should have a consistent indentation."
           },
           {
+            "const": "PSUseConsistentParameterSetName",
+            "title": "Use Consistent Parameter Set Name",
+            "description": "Parameter set names in PowerShell are case-sensitive, unlike most other PowerShell elements. This rule ensures consistent casing and proper configuration of parameter sets to avoid runtime errors and improve code clarity."
+          },
+          {
             "const": "PSUseConsistentWhitespace",
             "title": "Use Consistent Whitespace",
             "description": "Check for whitespace between keyword and open paren/curly, around assignment operator ('='), around arithmetic operators and after separators (',' and ';')"
@@ -1121,7 +1084,7 @@
           {
             "const": "PSUseCorrectCasing",
             "title": "Use Correct Casing",
-            "description": "For better readability and consistency, use consistent casing."
+          "description": "Use exact casing for Type, Cmdlet, and Parameter names, and lowercase for keywords and operators.\n\nThis rule detects inconsistent casing in cmdlet names, parameters, type names, keywords, and operators. PowerShell is case-insensitive wherever possible, so the casing of cmdlet names, parameters, keywords, and operators don't affect functionality.\nHowever, this rule ensures consistent casing for clarity and readability. Using lowercase keywords helps distinguish them from commands, while using lowercase operators helps distinguish them from parameters."
           },
           {
             "const": "PSUseDeclaredVarsMoreThanAssignments",

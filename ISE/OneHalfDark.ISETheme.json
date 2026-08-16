@@ -1,0 +1,745 @@
+{
+  "Name": "One Half Dark",
+  "FontFamily": "Cascadia Code PL",
+  "FontSize": 9,
+  "Colors": {
+    "Editor": {
+      "BackgroundColor": {
+        "Value": -14144460,
+        "ARGB": [
+          "255",
+          "40",
+          "44",
+          "52"
+        ],
+        "Name": "ff282c34"
+      },
+      "ForegroundColor": {
+        "Value": -5524801,
+        "ARGB": [
+          "255",
+          "171",
+          "178",
+          "191"
+        ],
+        "Name": "ffabb2bf"
+      }
+    },
+    "Console": {
+      "ErrorForegroundColor": {
+        "Value": -29547,
+        "ARGB": [
+          "255",
+          "255",
+          "140",
+          "149"
+        ],
+        "Name": "ffff8c95"
+      },
+      "ErrorBackgroundColor": {
+        "Value": 16777215,
+        "ARGB": [
+          "0",
+          "255",
+          "255",
+          "255"
+        ],
+        "Name": "ffffff"
+      },
+      "WarningForegroundColor": {
+        "Value": -935290,
+        "ARGB": [
+          "255",
+          "241",
+          "186",
+          "134"
+        ],
+        "Name": "fff1ba86"
+      },
+      "WarningBackgroundColor": {
+        "Value": 16777215,
+        "ARGB": [
+          "0",
+          "255",
+          "255",
+          "255"
+        ],
+        "Name": "ffffff"
+      },
+      "VerboseForegroundColor": {
+        "Value": -1664771,
+        "ARGB": [
+          "255",
+          "230",
+          "152",
+          "253"
+        ],
+        "Name": "ffe698fd"
+      },
+      "VerboseBackgroundColor": {
+        "Value": 16777215,
+        "ARGB": [
+          "0",
+          "255",
+          "255",
+          "255"
+        ],
+        "Name": "ffffff"
+      },
+      "DebugForegroundColor": {
+        "Value": -8988958,
+        "ARGB": [
+          "255",
+          "118",
+          "214",
+          "226"
+        ],
+        "Name": "ff76d6e2"
+      },
+      "DebugBackgroundColor": {
+        "Value": 16777215,
+        "ARGB": [
+          "0",
+          "255",
+          "255",
+          "255"
+        ],
+        "Name": "ffffff"
+      },
+      "BackgroundColor": {
+        "Value": -14144460,
+        "ARGB": [
+          "255",
+          "40",
+          "44",
+          "52"
+        ],
+        "Name": "ff282c34"
+      },
+      "TextBackgroundColor": {
+        "Value": -14144460,
+        "ARGB": [
+          "255",
+          "40",
+          "44",
+          "52"
+        ],
+        "Name": "ff282c34"
+      },
+      "ForegroundColor": {
+        "Value": -657931,
+        "ARGB": [
+          "255",
+          "245",
+          "245",
+          "245"
+        ],
+        "Name": "fff5f5f5"
+      },
+      "Attribute": {
+        "Value": -5526843,
+        "ARGB": [
+          "255",
+          "171",
+          "170",
+          "197"
+        ],
+        "Name": "ffabaac5"
+      },
+      "Command": {
+        "Value": -8988958,
+        "ARGB": [
+          "255",
+          "118",
+          "214",
+          "226"
+        ],
+        "Name": "ff76d6e2"
+      },
+      "CommandArgument": {
+        "Value": -10375185,
+        "ARGB": [
+          "255",
+          "97",
+          "175",
+          "239"
+        ],
+        "Name": "ff61afef"
+      },
+      "CommandParameter": {
+        "Value": -5524801,
+        "ARGB": [
+          "255",
+          "171",
+          "178",
+          "191"
+        ],
+        "Name": "ffabb2bf"
+      },
+      "Comment": {
+        "Value": -8355664,
+        "ARGB": [
+          "255",
+          "128",
+          "128",
+          "176"
+        ],
+        "Name": "ff8080b0"
+      },
+      "GroupEnd": {
+        "Value": -10496,
+        "ARGB": [
+          "255",
+          "255",
+          "215",
+          "0"
+        ],
+        "Name": "ffffd700"
+      },
+      "GroupStart": {
+        "Value": -10496,
+        "ARGB": [
+          "255",
+          "255",
+          "215",
+          "0"
+        ],
+        "Name": "ffffd700"
+      },
+      "Keyword": {
+        "Value": -3770147,
+        "ARGB": [
+          "255",
+          "198",
+          "120",
+          "221"
+        ],
+        "Name": "ffc678dd"
+      },
+      "LineContinuation": {
+        "Value": -3770147,
+        "ARGB": [
+          "255",
+          "198",
+          "120",
+          "221"
+        ],
+        "Name": "ffc678dd"
+      },
+      "LoopLabel": {
+        "Value": -8269825,
+        "ARGB": [
+          "255",
+          "129",
+          "207",
+          "255"
+        ],
+        "Name": "ff81cfff"
+      },
+      "Member": {
+        "Value": -2069387,
+        "ARGB": [
+          "255",
+          "224",
+          "108",
+          "117"
+        ],
+        "Name": "ffe06c75"
+      },
+      "NewLine": {
+        "Value": -657931,
+        "ARGB": [
+          "255",
+          "245",
+          "245",
+          "245"
+        ],
+        "Name": "fff5f5f5"
+      },
+      "Number": {
+        "Value": -3040666,
+        "ARGB": [
+          "255",
+          "209",
+          "154",
+          "102"
+        ],
+        "Name": "ffd19a66"
+      },
+      "Operator": {
+        "Value": -3770147,
+        "ARGB": [
+          "255",
+          "198",
+          "120",
+          "221"
+        ],
+        "Name": "ffc678dd"
+      },
+      "Position": {
+        "Value": -657931,
+        "ARGB": [
+          "255",
+          "245",
+          "245",
+          "245"
+        ],
+        "Name": "fff5f5f5"
+      },
+      "StatementSeparator": {
+        "Value": -5524801,
+        "ARGB": [
+          "255",
+          "171",
+          "178",
+          "191"
+        ],
+        "Name": "ffabb2bf"
+      },
+      "String": {
+        "Value": -5717079,
+        "ARGB": [
+          "255",
+          "168",
+          "195",
+          "169"
+        ],
+        "Name": "ffa8c3a9"
+      },
+      "Type": {
+        "Value": -1664771,
+        "ARGB": [
+          "255",
+          "230",
+          "152",
+          "253"
+        ],
+        "Name": "ffe698fd"
+      },
+      "Unknown": {
+        "Value": -657931,
+        "ARGB": [
+          "255",
+          "245",
+          "245",
+          "245"
+        ],
+        "Name": "fff5f5f5"
+      },
+      "Variable": {
+        "Value": -2061163,
+        "ARGB": [
+          "255",
+          "224",
+          "140",
+          "149"
+        ],
+        "Name": "ffe08c95"
+      }
+    },
+    "PowerShell": {
+      "Attribute": {
+        "Value": -5526843,
+        "ARGB": [
+          "255",
+          "171",
+          "170",
+          "197"
+        ],
+        "Name": "ffabaac5"
+      },
+      "Command": {
+        "Value": -8988958,
+        "ARGB": [
+          "255",
+          "118",
+          "214",
+          "226"
+        ],
+        "Name": "ff76d6e2"
+      },
+      "CommandArgument": {
+        "Value": -10375185,
+        "ARGB": [
+          "255",
+          "97",
+          "175",
+          "239"
+        ],
+        "Name": "ff61afef"
+      },
+      "CommandParameter": {
+        "Value": -5524801,
+        "ARGB": [
+          "255",
+          "171",
+          "178",
+          "191"
+        ],
+        "Name": "ffabb2bf"
+      },
+      "Comment": {
+        "Value": -8355664,
+        "ARGB": [
+          "255",
+          "128",
+          "128",
+          "176"
+        ],
+        "Name": "ff8080b0"
+      },
+      "GroupEnd": {
+        "Value": -10496,
+        "ARGB": [
+          "255",
+          "255",
+          "215",
+          "0"
+        ],
+        "Name": "ffffd700"
+      },
+      "GroupStart": {
+        "Value": -10496,
+        "ARGB": [
+          "255",
+          "255",
+          "215",
+          "0"
+        ],
+        "Name": "ffffd700"
+      },
+      "Keyword": {
+        "Value": -3770147,
+        "ARGB": [
+          "255",
+          "198",
+          "120",
+          "221"
+        ],
+        "Name": "ffc678dd"
+      },
+      "LineContinuation": {
+        "Value": -3770147,
+        "ARGB": [
+          "255",
+          "198",
+          "120",
+          "221"
+        ],
+        "Name": "ffc678dd"
+      },
+      "LoopLabel": {
+        "Value": -8269825,
+        "ARGB": [
+          "255",
+          "129",
+          "207",
+          "255"
+        ],
+        "Name": "ff81cfff"
+      },
+      "Member": {
+        "Value": -2069387,
+        "ARGB": [
+          "255",
+          "224",
+          "108",
+          "117"
+        ],
+        "Name": "ffe06c75"
+      },
+      "NewLine": {
+        "Value": -657931,
+        "ARGB": [
+          "255",
+          "245",
+          "245",
+          "245"
+        ],
+        "Name": "fff5f5f5"
+      },
+      "Number": {
+        "Value": -3040666,
+        "ARGB": [
+          "255",
+          "209",
+          "154",
+          "102"
+        ],
+        "Name": "ffd19a66"
+      },
+      "Operator": {
+        "Value": -3770147,
+        "ARGB": [
+          "255",
+          "198",
+          "120",
+          "221"
+        ],
+        "Name": "ffc678dd"
+      },
+      "Position": {
+        "Value": -657931,
+        "ARGB": [
+          "255",
+          "245",
+          "245",
+          "245"
+        ],
+        "Name": "fff5f5f5"
+      },
+      "StatementSeparator": {
+        "Value": -5524801,
+        "ARGB": [
+          "255",
+          "171",
+          "178",
+          "191"
+        ],
+        "Name": "ffabb2bf"
+      },
+      "String": {
+        "Value": -5717079,
+        "ARGB": [
+          "255",
+          "168",
+          "195",
+          "169"
+        ],
+        "Name": "ffa8c3a9"
+      },
+      "Type": {
+        "Value": -1664771,
+        "ARGB": [
+          "255",
+          "230",
+          "152",
+          "253"
+        ],
+        "Name": "ffe698fd"
+      },
+      "Unknown": {
+        "Value": -657931,
+        "ARGB": [
+          "255",
+          "245",
+          "245",
+          "245"
+        ],
+        "Name": "fff5f5f5"
+      },
+      "Variable": {
+        "Value": -2061163,
+        "ARGB": [
+          "255",
+          "224",
+          "140",
+          "149"
+        ],
+        "Name": "ffe08c95"
+      }
+    },
+    "XML": {
+      "CharacterData": {
+        "Value": -6765703,
+        "ARGB": [
+          "255",
+          "152",
+          "195",
+          "121"
+        ],
+        "Name": "ff98c379"
+      },
+      "QuotedString": {
+        "Value": -6765703,
+        "ARGB": [
+          "255",
+          "152",
+          "195",
+          "121"
+        ],
+        "Name": "ff98c379"
+      },
+      "Comment": {
+        "Value": -10722448,
+        "ARGB": [
+          "255",
+          "92",
+          "99",
+          "112"
+        ],
+        "Name": "ff5c6370"
+      },
+      "CommentDelimiter": {
+        "Value": -10722448,
+        "ARGB": [
+          "255",
+          "92",
+          "99",
+          "112"
+        ],
+        "Name": "ff5c6370"
+      },
+      "15": {
+        "Value": -16777216,
+        "ARGB": [
+          "255",
+          "0",
+          "0",
+          "0"
+        ],
+        "Name": "ff000000"
+      },
+      "13": {
+        "Value": -16777216,
+        "ARGB": [
+          "255",
+          "0",
+          "0",
+          "0"
+        ],
+        "Name": "ff000000"
+      },
+      "12": {
+        "Value": -16777216,
+        "ARGB": [
+          "255",
+          "0",
+          "0",
+          "0"
+        ],
+        "Name": "ff000000"
+      },
+      "14": {
+        "Value": -16777216,
+        "ARGB": [
+          "255",
+          "0",
+          "0",
+          "0"
+        ],
+        "Name": "ff000000"
+      },
+      "18": {
+        "Value": -16777216,
+        "ARGB": [
+          "255",
+          "0",
+          "0",
+          "0"
+        ],
+        "Name": "ff000000"
+      },
+      "MarkupExtension": {
+        "Value": -6765703,
+        "ARGB": [
+          "255",
+          "152",
+          "195",
+          "121"
+        ],
+        "Name": "ff98c379"
+      },
+      "Quote": {
+        "Value": -6765703,
+        "ARGB": [
+          "255",
+          "152",
+          "195",
+          "121"
+        ],
+        "Name": "ff98c379"
+      },
+      "17": {
+        "Value": -16777216,
+        "ARGB": [
+          "255",
+          "0",
+          "0",
+          "0"
+        ],
+        "Name": "ff000000"
+      },
+      "ElementName": {
+        "Value": -2069387,
+        "ARGB": [
+          "255",
+          "224",
+          "108",
+          "117"
+        ],
+        "Name": "ffe06c75"
+      },
+      "11": {
+        "Value": -16777216,
+        "ARGB": [
+          "255",
+          "0",
+          "0",
+          "0"
+        ],
+        "Name": "ff000000"
+      },
+      "19": {
+        "Value": -16777216,
+        "ARGB": [
+          "255",
+          "0",
+          "0",
+          "0"
+        ],
+        "Name": "ff000000"
+      },
+      "16": {
+        "Value": -16777216,
+        "ARGB": [
+          "255",
+          "0",
+          "0",
+          "0"
+        ],
+        "Name": "ff000000"
+      },
+      "Attribute": {
+        "Value": -3040666,
+        "ARGB": [
+          "255",
+          "209",
+          "154",
+          "102"
+        ],
+        "Name": "ffd19a66"
+      },
+      "10": {
+        "Value": -16777216,
+        "ARGB": [
+          "255",
+          "0",
+          "0",
+          "0"
+        ],
+        "Name": "ff000000"
+      },
+      "Tag": {
+        "Value": -5524801,
+        "ARGB": [
+          "255",
+          "171",
+          "178",
+          "191"
+        ],
+        "Name": "ffabb2bf"
+      },
+      "Text": {
+        "Value": -5524801,
+        "ARGB": [
+          "255",
+          "171",
+          "178",
+          "191"
+        ],
+        "Name": "ffabb2bf"
+      }
+    }
+  }
+}
