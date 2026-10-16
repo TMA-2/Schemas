@@ -1,6 +1,5 @@
 {
   "$schema": "PSScriptAnalyzer.schema.json",
-
   "IncludeRules": [
     "PSAvoidAssignmentToAutomaticVariable",
     "PSAvoidDefaultValueForMandatoryParameter",

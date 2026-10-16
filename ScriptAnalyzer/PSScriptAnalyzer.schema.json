@@ -147,7 +147,7 @@
         },
         "pattern": "^PS[A-Za-z]+",
         "patternProperties": {
-          "^[\\w-]+$": {
+          "^[A-Za-z0-9]+$": {
             "title": "A Custom Rule Setting",
             "description": "Configuration setting for the custom rule."
           }
@@ -696,7 +696,7 @@
       "uniqueItems": true,
       "minItems": 0,
       "additionalItems": true,
-      "additionalProperties": true,
+      "additionalProperties": false,
       "items": {
         "type": "string",
         "additionalItems": true,
@@ -765,7 +765,10 @@
                 "PSUseCompatibleSyntax",
                 "PSUseCompatibleTypes",
                 "PSUseConsistentIndentation",
+                "PSUseConsistentParameterSetName",
+                "PSUseConsistentParametersKind", // TODO
                 "PSUseConsistentWhitespace",
+                "PSUseConstrainedLanguageMode", // TODO
                 "PSUseCorrectCasing",
                 "PSUseDeclaredVarsMoreThanAssignments",
                 "PSUseLiteralInitializerForHashtable",
@@ -773,6 +776,7 @@
                 "PSUseProcessBlockForPipelineCommand",
                 "PSUsePSCredentialType",
                 "PSUseShouldProcessForStateChangingFunctions",
+                "PSUseSingleValueFromPipelineParameter", // TODO
                 "PSUseSingularNouns",
                 "PSUseSupportsShouldProcess",
                 "PSUseToExportFieldsInManifest",
