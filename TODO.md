@@ -38,9 +38,12 @@
 - [ ] Wait until you or someone else has the ability / time to integrate JSON-based packaging settings.
 
 ## PS Script Analyzer
-- [ ] Update to include v1.25 `PSAlignAssignmentStatement` description & settings.
+- [x] Update to include v1.25 `PSAlignAssignmentStatement` description & settings.
+  - [ ] Add `PSUseConsistentParametersKind`
+  - [ ] Add `PSUseConstrainedLanguageMode`
+  - [ ] Add `PSUseSingleValueFromPipelineParameter`
 - [ ] Update [`Build-ScriptAnalyzerSchema.ps1`](Build-ScriptAnalyzerSchema.ps1) to check for new PSSA versions (from the github repo or `find-module`) and rules by parsing repo docs or updating to the latest version before running `Get-ScriptAnalyzerRule`.
-  - [ ] Parse the markdown help docs for the full descriptions.
+  - [ ] Parse the included help or online markdown for new rule names and related configurations. This should be easier now that a template was actually created (thank GOD) for a rule document.
 - [ ] Semi-related task: Unify the help format for rule info (severity, configurable, default, etc.), description, configuration info, examples.
   - [ ] Write a GitHub Copilot agent to apply this standard to all documentation
   - [ ] Or, write a script to parse the markdown and output a pscustomobject showing which rules are followed along with their content. Kind of... linting the linter docs?
@@ -48,6 +51,7 @@
 
 ## Specter
 - [ ] Copy PS Script Analyzer schema and modify to taste.
+- [ ] Create PR on Justin Grote's VS Code extension to add a setting for the config file to pass to the Specter Server via `-configfile`, whether json or psd1.
 
 ## SpeedCrunch
 - [x] This is... done.
