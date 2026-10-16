@@ -2,178 +2,373 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "ISE Color Theme",
   "type": "object",
+  "required": [
+    "Name",
+    "FontFamily",
+    "FontSize",
+    "Colors"
+  ],
   "properties": {
     "Name": {
       "type": "string",
-      "description": "The friendly display name of the color theme."
+      "description": "The friendly display name of the color theme.",
+      "examples": [
+        "Monokai",
+        "One Half Dark",
+        "One Half Light",
+        "Catppuccin Mocha",
+        "Catppuccin Latte"
+      ]
     },
-    "FontName": {
+    "FontFamily": {
       "type": "string",
-      "default": "Consolas",
-      "description": "The font family used in both the editor and console panes."
+      "default": "Cascadia Code",
+      "description": "The font family used in both the editor and console panes.",
+      "examples": [
+        "Fira Code",
+        "Fira Mono",
+        "JetBrains Mono",
+        "Cascadia Code",
+        "Consolas"
+      ]
     },
     "FontSize": {
       "type": "integer",
       "default": 12,
-      "minimum": 6,
-      "maximum": 32,
+      "minimum": 4,
+      "maximum": 72,
       "description": "The font size in points."
     },
     "Colors": {
       "type": "object",
-      "description": "The flat key-value pairs representing ISE pane colors and token highlighting colors.",
-      "additionalProperties": {
-        "type": "string",
-        "pattern": "^#[0-9A-Fa-f]{6}$",
-        "description": "A standard 6-character hex color code (e.g. #012456)."
-      },
+      "description": "Color values for each ISE pane and token highlighting element. Individual color values can be either a standard 8-character hex color code (e.g. #FF012456) or an ARGB signed integer.",
+      "additionalProperties": false,
+      "required": [
+        "Output",
+        "Console",
+        "Editor"
+      ],
       "properties": {
-        "ConsolePaneBackgroundColor": {
-          "type": "string"
+        "Output": {
+          "title": "Stream Output Colors",
+          "description": "Colors for the different output streams in the ISE.",
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/definitions/Color",
+            "enum": [
+              "ErrorForegroundColor",
+              "ErrorBackgroundColor",
+              "WarningForegroundColor",
+              "WarningBackgroundColor",
+              "VerboseForegroundColor",
+              "VerboseBackgroundColor",
+              "DebugForegroundColor",
+              "DebugBackgroundColor"
+            ]
+          }
         },
-        "ConsolePaneTextBackgroundColor": {
-          "type": "string"
+        "Console": {
+          "$comment": "Colors that relate to 'ConsolePane' colors in the original StorableColorTheme schema.",
+          "title": "Console Colors",
+          "description": "Console pane and syntax highlighting colors.",
+          "type": "object",
+          "properties": {
+            "BackgroundColor": {
+              "$ref": "#/definitions/Color"
+            },
+            "TextBackgroundColor": {
+              "$ref": "#/definitions/Color"
+            },
+            "ForegroundColor": {
+              "$ref": "#/definitions/Color"
+            },
+            "PowerShell": {
+              "$comment": "Colors that relate to 'ConsoleTokenColors' values in the original StorableColorTheme schema.",
+              "title": "PowerShell Console Colors",
+              "description": "PowerShell syntax highlighting colors in the console pane.",
+              "type": "object",
+              "properties": {
+                "Attribute": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Command": {
+                  "$ref": "#/definitions/Color"
+                },
+                "CommandArgument": {
+                  "$ref": "#/definitions/Color"
+                },
+                "CommandParameter": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Comment": {
+                  "$ref": "#/definitions/Color"
+                },
+                "GroupEnd": {
+                  "$ref": "#/definitions/Color"
+                },
+                "GroupStart": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Keyword": {
+                  "$ref": "#/definitions/Color"
+                },
+                "LineContinuation": {
+                  "$ref": "#/definitions/Color"
+                },
+                "LoopLabel": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Member": {
+                  "$ref": "#/definitions/Color"
+                },
+                "NewLine": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Number": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Operator": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Position": {
+                  "$ref": "#/definitions/Color"
+                },
+                "StatementSeparator": {
+                  "$ref": "#/definitions/Color"
+                },
+                "String": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Type": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Unknown": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Variable": {
+                  "$ref": "#/definitions/Color"
+                }
+              }
+            }
+          }
         },
-        "ConsolePaneForegroundColor": {
-          "type": "string"
-        },
-        "ScriptPaneBackgroundColor": {
-          "type": "string"
-        },
-        "ScriptPaneForegroundColor": {
-          "type": "string"
-        },
-        "SelectedForegroundColor": {
-          "type": "string"
-        },
-        "SelectedBackgroundColor": {
-          "type": "string"
-        },
-        "TokenColors\\Attribute": {
-          "type": "string"
-        },
-        "TokenColors\\Command": {
-          "type": "string"
-        },
-        "TokenColors\\CommandArgument": {
-          "type": "string"
-        },
-        "TokenColors\\CommandParameter": {
-          "type": "string"
-        },
-        "TokenColors\\Comment": {
-          "type": "string"
-        },
-        "TokenColors\\GroupEnd": {
-          "type": "string"
-        },
-        "TokenColors\\GroupStart": {
-          "type": "string"
-        },
-        "TokenColors\\Keyword": {
-          "type": "string"
-        },
-        "TokenColors\\LineContinuation": {
-          "type": "string"
-        },
-        "TokenColors\\LoopLabel": {
-          "type": "string"
-        },
-        "TokenColors\\Member": {
-          "type": "string"
-        },
-        "TokenColors\\NewLine": {
-          "type": "string"
-        },
-        "TokenColors\\Number": {
-          "type": "string"
-        },
-        "TokenColors\\Operator": {
-          "type": "string"
-        },
-        "TokenColors\\Position": {
-          "type": "string"
-        },
-        "TokenColors\\StatementSeparator": {
-          "type": "string"
-        },
-        "TokenColors\\String": {
-          "type": "string"
-        },
-        "TokenColors\\Type": {
-          "type": "string"
-        },
-        "TokenColors\\Unknown": {
-          "type": "string"
-        },
-        "TokenColors\\Variable": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\Attribute": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\Command": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\CommandArgument": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\CommandParameter": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\Comment": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\GroupEnd": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\GroupStart": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\Keyword": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\LineContinuation": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\LoopLabel": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\Member": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\NewLine": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\Number": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\Operator": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\Position": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\StatementSeparator": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\String": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\Type": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\Unknown": {
-          "type": "string"
-        },
-        "ConsoleTokenColors\\Variable": {
-          "type": "string"
+        "Editor": {
+          "$comment": "Colors that relate to 'ScriptPane' colors in the original StorableColorTheme.",
+          "title": "Script Editor Colors",
+          "description": "Script editor pane and syntax highlighting colors.",
+          "type": "object",
+          "properties": {
+            "BackgroundColor": {
+              "$ref": "#/definitions/Color"
+            },
+            "ForegroundColor": {
+              "$ref": "#/definitions/Color"
+            },
+            "PowerShell": {
+              "$comment": "Colors that relate to 'TokenColors' values in the original StorableColorTheme schema.",
+              "title": "PowerShell Editor Colors",
+              "description": "PowerShell syntax highlighting colors in the editor pane.",
+              "type": "object",
+              "properties": {
+                "Attribute": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Command": {
+                  "$ref": "#/definitions/Color"
+                },
+                "CommandArgument": {
+                  "$ref": "#/definitions/Color"
+                },
+                "CommandParameter": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Comment": {
+                  "$ref": "#/definitions/Color"
+                },
+                "GroupEnd": {
+                  "$ref": "#/definitions/Color"
+                },
+                "GroupStart": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Keyword": {
+                  "$ref": "#/definitions/Color"
+                },
+                "LineContinuation": {
+                  "$ref": "#/definitions/Color"
+                },
+                "LoopLabel": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Member": {
+                  "$ref": "#/definitions/Color"
+                },
+                "NewLine": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Number": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Operator": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Position": {
+                  "$ref": "#/definitions/Color"
+                },
+                "StatementSeparator": {
+                  "$ref": "#/definitions/Color"
+                },
+                "String": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Type": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Unknown": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Variable": {
+                  "$ref": "#/definitions/Color"
+                }
+              }
+            },
+            "XML": {
+              "$comment": "Colors that relate to 'XMLTokenColors' values in the original StorableColorTheme schema.",
+              "title": "XML Console Colors",
+              "description": "XML syntax highlighting colors in the editor pane.",
+              "type": "object",
+              "propertyNames": {
+                "enum": [
+                  "CharacterData",
+                  "QuotedString",
+                  "Comment",
+                  "CommentDelimiter",
+                  "15",
+                  "13",
+                  "12",
+                  "14",
+                  "18",
+                  "MarkupExtension",
+                  "Quote",
+                  "17",
+                  "ElementName",
+                  "11",
+                  "19",
+                  "16",
+                  "Attribute",
+                  "10",
+                  "Tag",
+                  "Text"
+                ],
+                "$ref": "#/definitions/Color"
+                // "pattern": "^(CharacterData|QuotedString|Comment|CommentDelimiter|15|13|12|14|18|MarkupExtension|Quote|17|ElementName|11|19|16|Attribute|10|Tag|Text)$",
+              }
+              /* "properties": {
+                "CharacterData": {
+                  "$ref": "#/definitions/Color"
+                },
+                "QuotedString": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Comment": {
+                  "$ref": "#/definitions/Color"
+                },
+                "CommentDelimiter": {
+                  "$ref": "#/definitions/Color"
+                },
+                "15": {
+                  "$ref": "#/definitions/Color"
+                },
+                "13": {
+                  "$ref": "#/definitions/Color"
+                },
+                "12": {
+                  "$ref": "#/definitions/Color"
+                },
+                "14": {
+                  "$ref": "#/definitions/Color"
+                },
+                "18": {
+                  "$ref": "#/definitions/Color"
+                },
+                "MarkupExtension": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Quote": {
+                  "$ref": "#/definitions/Color"
+                },
+                "17": {
+                  "$ref": "#/definitions/Color"
+                },
+                "ElementName": {
+                  "$ref": "#/definitions/Color"
+                },
+                "11": {
+                  "$ref": "#/definitions/Color"
+                },
+                "19": {
+                  "$ref": "#/definitions/Color"
+                },
+                "16": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Attribute": {
+                  "$ref": "#/definitions/Color"
+                },
+                "10": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Tag": {
+                  "$ref": "#/definitions/Color"
+                },
+                "Text": {
+                  "$ref": "#/definitions/Color"
+                }
+              }
+            } */
+            }
+          }
         }
       }
     }
   },
-  "required": [
-    "Name",
-    "Colors"
-  ]
+  "definitions": {
+    "Color": {
+      // each color property should have either a number value or a hexadecimal string.
+      "title": "Color",
+      "$comment": "A color value, either in decimal ARGB format or hexadecimal ARGB format.",
+      "oneOf": [
+        { "$ref": "#/definitions/ARGB" },
+        { "$ref": "#/definitions/Hex" }
+      ]
+    },
+    "ScARGB": {
+      "title": "ScARGB Color",
+      "description": "Alpha, Red, Green, and Blue color values in ScARGB format, 0.0-1.0.",
+      "type": "array",
+      "items": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "minItems": 3,
+      "maxItems": 4,
+      "default": [1.0, 0.0, 0.141, 0.337]
+    },
+    "ARGB": {
+      "title": "Decimal ARGB Color",
+      "description": "Alpha, Red, Green, and Blue combined color values in an integer. The default value is equal to 0xFFFF0000, or Red.",
+      "type": "integer",
+      "minimum": -2147483648,
+      "maximum": 2147483647,
+      "default": -65536
+    },
+    "Hex": {
+      "title": "Hexadecimal ARGB Color",
+      "description": "Alpha, Red, Green, and Blue color values in hexadecimal format, 00-FF.",
+      "type": "string",
+      "pattern": "^[0-9A-Fa-f]{8}$",
+      "default": "FF012345"
+    }
+  }
 }

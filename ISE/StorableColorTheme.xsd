@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:annotation>
+    <xs:documentation>Schema for the PowerShell ISE "StorableColorTheme" .ps1xml format. This is a
+      WPF ("DataContractSerializer"-style) serialization of a color theme dictionary. The sample
+      instance this schema targets declares xmlns:xsd and xmlns:xsi on the root element, but those
+      namespace declarations are unused artifacts of the serializer and are not part of the actual
+      content model; this schema intentionally does not require or restrict them.</xs:documentation>
+  </xs:annotation>
+
+  <xs:element name="StorableColorTheme">
+    <xs:annotation>
+      <xs:documentation>Root element of an ISE color theme file. Contains theme metadata plus two
+        parallel, positionally-correlated lists: Keys (property names) and Values (colors).
+
+        IMPORTANT - POSITIONAL PAIRING CONTRACT: Keys/string and Values/Color behave like a
+        serialized Dictionary/OrderedDictionary that has been split into a "keys" array and a
+        "values" array. The Nth Keys/string element names the property that the Nth Values/Color
+        element supplies a color for (i.e., treat the two lists as if zip()'d together in order).
+        Consumers and tools must preserve this order and must never reorder, insert into, or
+        remove from one list without making the exact same change to the other list at the same
+        position.
+
+        KNOWN XSD LIMITATIONS (cannot be validated by this schema): XSD 1.0 has no mechanism to
+        bind the identity/value of an element in one sibling list to the identity/value of an
+        element at the same index in a different sibling list, so the Keys[i]/Values[i]
+        correspondence itself cannot be structurally enforced here. Likewise, XSD 1.0 cannot
+        express an equal-cardinality constraint between two independent element sequences (i.e.,
+        there is no built-in way to require count(Keys/string) = count(Values/Color)). Both of
+        these must be verified by external tooling or at runtime, not by this schema.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Name" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Display name of the color theme, e.g. "One Dark Pro". Must be a
+              non-empty string.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="FontFamily" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Name of the font family used by the theme, e.g. "Cascadia Code PL".
+              Must be a non-empty string.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="FontSize" type="FontSizeType">
+          <xs:annotation>
+            <xs:documentation>Font size in points, e.g. 9. Serialized as a decimal but expected to
+              be a positive whole number.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Keys" type="KeysType">
+          <xs:annotation>
+            <xs:documentation>Ordered list of property/key names. See the positional pairing
+              contract documented on the StorableColorTheme root element: Keys/string[i]
+              corresponds to Values/Color[i].</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="Values" type="ValuesType">
+          <xs:annotation>
+            <xs:documentation>Ordered list of colors. See the positional pairing contract
+              documented on the StorableColorTheme root element: Values/Color[i] corresponds to
+              Keys/string[i].</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+
+    <!-- Enforces uniqueness of key names within Keys; cannot enforce the cross-list positional
+         pairing with Values or the equal-cardinality of the two lists - see documentation above. -->
+    <xs:unique name="UniqueKeyName">
+      <xs:selector xpath=".//string"/>
+      <xs:field xpath="."/>
+    </xs:unique>
+  </xs:element>
+
+  <xs:simpleType name="NonEmptyString">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="FontSizeType">
+    <xs:annotation>
+      <xs:documentation>Positive integer font size, expressed as xsd:decimal to tolerate the
+        decimal-formatted value observed in sample files (e.g. "9").</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:minExclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="KeysType">
+    <xs:annotation>
+      <xs:documentation>Container for the ordered list of key names. Each string is either a flat
+        identifier (e.g. "ErrorForegroundColor") or a backslash-qualified "Category\SubKey" name
+        (e.g. "TokenColors\Attribute", "XmlTokenColors\15"), where SubKey may itself be a plain
+        word or a purely numeric segment.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="string" type="KeyNameType" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>A single key name. Order matters: this element's position in the
+            sequence must match the position of its corresponding Values/Color element.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="KeyNameType">
+    <xs:annotation>
+      <xs:documentation>Either a flat identifier ("Name") or a two-part "Category\SubKey"
+        identifier where SubKey may be alphabetic or numeric (e.g. "TokenColors\Attribute",
+        "XmlTokenColors\15"). This pattern documents the two observed conventions; it is
+        intentionally permissive rather than an exhaustive enum of known key names.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:pattern value="[^\\]+(\\[^\\]+)?"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="ValuesType">
+    <xs:annotation>
+      <xs:documentation>Container for the ordered list of color values.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Color" type="ColorType" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>A single color entry. Order matters: this element's position in the
+            sequence must match the position of its corresponding Keys/string element.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ColorType">
+    <xs:annotation>
+      <xs:documentation>A single color, expressed both as ARGB byte channels (A, R, G, B) and as
+        scRGB floating point channels (ScA, ScR, ScG, ScB).</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="A" type="ColorByte">
+        <xs:annotation>
+          <xs:documentation>Alpha channel, 0-255.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="R" type="ColorByte">
+        <xs:annotation>
+          <xs:documentation>Red channel, 0-255.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="G" type="ColorByte">
+        <xs:annotation>
+          <xs:documentation>Green channel, 0-255.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="B" type="ColorByte">
+        <xs:annotation>
+          <xs:documentation>Blue channel, 0-255.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ScA" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>scRGB alpha channel. Typically 0.0-1.0, but left unbounded as
+            xsd:decimal since floating-point rounding may slightly exceed 1.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ScR" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>scRGB red channel. Typically 0.0-1.0, but left unbounded as
+            xsd:decimal since floating-point rounding may slightly exceed 1.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ScG" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>scRGB green channel. Typically 0.0-1.0, but left unbounded as
+            xsd:decimal since floating-point rounding may slightly exceed 1.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ScB" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>scRGB blue channel. Typically 0.0-1.0, but left unbounded as
+            xsd:decimal since floating-point rounding may slightly exceed 1.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="ColorByte">
+    <xs:annotation>
+      <xs:documentation>An unsigned byte channel value, 0-255.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:unsignedByte"/>
+  </xs:simpleType>
+
+</xs:schema>

@@ -1,8 +1,12 @@
 {
+  "$schema": "./ISETheme.schema.json",
   "Name": "One Half Dark",
   "FontFamily": "Cascadia Code PL",
   "FontSize": 9,
   "Colors": {
+    "ConsolePaneBackgroundColor": {
+      "Hex": "ff282c34"
+    },
     "Editor": {
       "BackgroundColor": {
         "Value": -14144460,

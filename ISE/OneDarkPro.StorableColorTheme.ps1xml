@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<StorableColorTheme xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<StorableColorTheme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="StorableColorTheme.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>One Dark Pro</Name>
+  <FontFamily>Cascadia Code PL</FontFamily>
+  <FontSize>9</FontSize>
   <Keys>
+    <!-- Output -->
     <string>ErrorForegroundColor</string>
     <string>ErrorBackgroundColor</string>
     <string>WarningForegroundColor</string>
@@ -9,9 +14,11 @@
     <string>VerboseBackgroundColor</string>
     <string>DebugForegroundColor</string>
     <string>DebugBackgroundColor</string>
+    <!-- Console -->
     <string>ConsolePaneBackgroundColor</string>
     <string>ConsolePaneTextBackgroundColor</string>
     <string>ConsolePaneForegroundColor</string>
+    <!-- Script Editor -->
     <string>ScriptPaneBackgroundColor</string>
     <string>ScriptPaneForegroundColor</string>
     <string>TokenColors\Attribute</string>
@@ -34,6 +41,7 @@
     <string>TokenColors\Type</string>
     <string>TokenColors\Unknown</string>
     <string>TokenColors\Variable</string>
+    <!-- Console Token Colors -->
     <string>ConsoleTokenColors\Attribute</string>
     <string>ConsoleTokenColors\Command</string>
     <string>ConsoleTokenColors\CommandArgument</string>
@@ -54,6 +62,7 @@
     <string>ConsoleTokenColors\Type</string>
     <string>ConsoleTokenColors\Unknown</string>
     <string>ConsoleTokenColors\Variable</string>
+    <!-- XML Token Colors -->
     <string>XmlTokenColors\CharacterData</string>
     <string>XmlTokenColors\QuotedString</string>
     <string>XmlTokenColors\Comment</string>
@@ -807,7 +816,4 @@
       <ScB>0.5209956</ScB>
     </Color>
   </Values>
-  <Name>One Dark Pro</Name>
-  <FontFamily>Cascadia Code PL</FontFamily>
-  <FontSize>9</FontSize>
 </StorableColorTheme>
